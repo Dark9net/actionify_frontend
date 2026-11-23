@@ -1,0 +1,80 @@
+/*
+  The public site's typefaces, from the brand's type sheet. Everything here is scoped to
+  <html data-site="public"> (lib/site.js), so the photographer panel keeps its own type.
+
+    DISPLAY  Futura: Jost on the web (its free twin)   headlines, big numbers, big statements
+             400 and 500 · tight tracking, −2% to −4% · set as written (no forced capitals)
+    TEXT     Inter                                      body copy, UI, documents
+             400 and 600 · normal tracking · 1.45 line height
+    LABELS   IBM Plex Mono                              [ bracket labels ], small numbers, metadata
+             400 · uppercase · +8% tracking
+    NEPALI   Mukta                                      Devanagari headlines and text; it follows the Latin
+             face in every stack, so Nepali words take it by themselves, and lang="ne" sets it first
+
+  The selectors start with :root[data-site="public"], so they outrank the page stylesheets' own
+  font rules without !important.
+*/
+
+/* ---- the faces ---- */
+:root[data-site="public"]{
+  --display:"Jost Variable", Jost, Futura, "Futura PT", Mukta, "Century Gothic", sans-serif;
+  --sans:"Inter Variable", Inter, Mukta, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono:"IBM Plex Mono", Mukta, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --nepali:Mukta, "Jost Variable", sans-serif;
+  --display-weight:500;
+  --display-tracking:-.02em; /* read by the moments in public/assets/moments */
+}
+
+/* ---- TEXT: Inter, 1.45 line height (rules that set their own spacing keep it) ---- */
+:root[data-site="public"] body{line-height:1.45}
+
+/* ---- DISPLAY: every headline, the big statements and the big numbers ---- */
+:root[data-site="public"] :is(
+  h1, h2, h3, h4, h5, h6,
+  .display, .faq-q, .wk-n, .statement .st-body, .db-stats strong, .db-marquee-n
+):not(.label):not(.sr-only){
+  font-family:var(--display);
+  font-weight:500;
+  font-optical-sizing:auto;
+  font-variation-settings:normal;
+  text-transform:none;
+  letter-spacing:-.02em;
+}
+/* the biggest statements sit tighter, towards −4% */
+:root[data-site="public"] :is(.hero-word, .page-title, .st-text, .pr-name, .db-title, .bk-row){letter-spacing:-.035em}
+/* a number set big reads best at the lighter weight */
+:root[data-site="public"] :is(.wk-n, .db-stats strong, .db-marquee-n){font-weight:400;font-variant-numeric:lining-nums tabular-nums}
+
+/* ---- LABELS: IBM Plex Mono, 400, uppercase, +8% ---- */
+:root[data-site="public"] :is(.label, .step-n, .qr-n, .tos-n, .wf-count){
+  font-family:var(--mono);
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+/* a section's kicker is a bracket label: [ HOW IT WORKS ] */
+:root[data-site="public"] :is(.sec-label, .f-label, .hero-eyebrow, .sb-kicker, h2.label, h3.label)::before{content:"[\00a0"}
+:root[data-site="public"] :is(.sec-label, .f-label, .hero-eyebrow, .sb-kicker, h2.label, h3.label)::after{content:"\00a0]"}
+
+/* ---- TEXT: Inter at 400 and 600 only, at normal tracking ---- */
+:root[data-site="public"] :is(
+  .au-caps, .bk-cta, .bk-blurb, .db-stats li, .db-act-text small, .db-drag-hint, .f-row .v, .ft-chip,
+  .ft-col--menu .ft-list, .hdr-link, .sb-access-sub, .sb-mail, .sb-social a, .d-row dd, .tos-nav a
+){font-weight:400}
+:root[data-site="public"] :is(.bk-blurb .dc, .db-dock-n strong, .db-dock-go.glass-btn){font-weight:600}
+:root[data-site="public"] :is(
+  .book-btn, .bk-cta, .ft-cta, .ft-chip, .ft-col--menu .ft-list, .hdr-link, .kit-call strong, .d-row dd, .f-row .v
+){letter-spacing:normal}
+/* buttons are UI: Inter 600, as written, normal tracking (also the ones that wore the label style) */
+:root[data-site="public"] .btn{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:normal;text-transform:none}
+:root[data-site="public"] :is(.map-pill, .sheet-close, .au-slide-label){
+  font-family:var(--sans);
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:normal;
+  text-transform:none;
+}
+
+/* ---- NEPALI: Mukta, paired with Jost in weight and width ---- */
+:root[data-site="public"] :lang(ne){font-family:var(--nepali)}
+:root[data-site="public"] :is(h1, h2, h3, h4, .display):lang(ne){font-family:var(--nepali);font-weight:600;letter-spacing:0}

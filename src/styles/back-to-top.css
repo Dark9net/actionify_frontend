@@ -1,0 +1,126 @@
+/* =====================================================
+   Back to top: a round ink button at the bottom right, shown at the foot of the page (BackToTop.jsx).
+   Comes in: fades, rises 14px and settles from .86 scale. Goes: faster, straight down.
+   Hover: lifts 2px, the arrow runs up and a fresh one follows from below, the "Top" tab slides out.
+   Press: .94. The ring, in light amber, draws itself round over the last stretch and closes at the very end.
+   ===================================================== */
+.to-top{
+  position:fixed;
+  /* it only shows at the foot of the page, so it sits just above the footer's big wordmark rather than
+     on its last letter: the wordmark's height on the footer's 1440 × 672 canvas (--u), plus a gap */
+  --u:min(100vw / 1440, 100svh / 672); /* the footer's own unit */
+  right:max(var(--gutter), env(safe-area-inset-right));
+  bottom:calc(240 * var(--u) + 18px);
+  z-index:1050; /* over the footer and the grain, under the header and every dialog */
+  width:56px;height:56px;
+  display:grid;place-items:center;
+  padding:0;border:0;border-radius:50%;
+  background:var(--ink);
+  color:var(--paper);
+  cursor:pointer;
+  box-shadow:0 14px 34px -14px rgba(36,22,23,.6), 0 2px 6px rgba(36,22,23,.18);
+  -webkit-tap-highlight-color:transparent;
+
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(14px) scale(.86);
+  transition:
+    opacity .2s ease-in,
+    transform .24s ease-in,
+    visibility 0s linear .24s,
+    background-color .25s var(--ease-ui),
+    box-shadow .3s var(--ease-ui);
+}
+.to-top.is-shown{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none;
+  transition:
+    opacity .35s var(--ease-ui),
+    transform .55s var(--ease-spring),
+    visibility 0s,
+    background-color .25s var(--ease-ui),
+    box-shadow .3s var(--ease-ui);
+}
+.to-top:focus-visible{outline:2px solid var(--rust-light);outline-offset:4px}
+
+/* ---- the progress ring ---- */
+.to-top-ring{
+  position:absolute;inset:4px;
+  width:calc(100% - 8px);height:calc(100% - 8px);
+  transform:rotate(-90deg);
+  fill:none;
+  stroke-width:1.6;
+  overflow:visible;
+}
+.to-top-ring circle{stroke:rgba(236,227,209,.18)}
+.to-top-ring .to-top-fill{
+  stroke:var(--rust-light);
+  stroke-linecap:round;
+  transition:stroke-dashoffset .12s linear;
+}
+
+/* ---- the arrow: two copies, the second waits below and runs in on hover ---- */
+.to-top-arrow{
+  position:relative;
+  width:18px;height:18px;
+  overflow:hidden;
+}
+.to-top-arrow svg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .45s var(--ease-ui);
+}
+.to-top-arrow svg + svg{transform:translateY(130%)}
+
+/* ---- the "Top" tab that slides out to the left ---- */
+.to-top-tip{
+  position:absolute;
+  right:calc(100% + 10px);top:50%;
+  padding:7px 12px;
+  border-radius:999px;
+  background:var(--paper);
+  color:var(--ink);
+  font:600 11px/1 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:0 8px 20px -10px rgba(36,22,23,.45);
+  opacity:0;
+  transform:translate(8px, -50%);
+  transition:opacity .2s var(--ease-ui), transform .3s var(--ease-ui);
+  pointer-events:none;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .to-top.is-shown:hover{
+    transform:translateY(-2px);
+    background:var(--rust);
+    box-shadow:0 18px 40px -14px rgba(142,81,41,.7), 0 2px 6px rgba(36,22,23,.18);
+    transition-duration:.35s, .3s, 0s, .25s, .3s;
+    transition-timing-function:var(--ease-ui);
+  }
+  .to-top:hover .to-top-arrow svg:first-child{transform:translateY(-130%)}
+  .to-top:hover .to-top-arrow svg + svg{transform:none}
+  .to-top:hover .to-top-tip{opacity:1;transform:translate(0, -50%)}
+}
+.to-top.is-shown:active{transform:scale(.94);transition-duration:.1s}
+
+/* ---- tablet: the footer's canvas is 1040 wide and its wordmark smaller ---- */
+@media (min-width:768px) and (max-width:1023px){
+  .to-top{--u:min(100vw / 1040, 100svh / 672);bottom:calc(178 * var(--u) + 18px)}
+}
+/* ---- phone: a touch smaller, over the wordmark set at 19.5vw ---- */
+@media (max-width:767px){
+  .to-top{width:50px;height:50px;right:16px;bottom:calc(19vw + 14px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .to-top,.to-top.is-shown{transform:none;transition:opacity .2s linear, visibility 0s linear .2s}
+  .to-top.is-shown{transition:opacity .2s linear}
+  .to-top-arrow svg,.to-top-tip,.to-top-ring .to-top-fill{transition:none}
+  .to-top:hover .to-top-arrow svg:first-child{transform:none}
+  .to-top:hover .to-top-arrow svg + svg{transform:translateY(130%)}
+}

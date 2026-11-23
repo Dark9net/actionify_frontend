@@ -1,0 +1,102 @@
+/* =====================================================
+   TERMS OF SERVICE (/terms): the sections to read, and a list of them that stays in view
+   ===================================================== */
+.tos{padding:8px 0 120px;border-top:1px solid var(--ink-16)}
+.tos-grid{
+  display:grid;
+  grid-template-columns:minmax(220px, 300px) minmax(0, 1fr);
+  gap:clamp(40px, 7vw, 120px);
+  align-items:start;
+  padding-top:56px;
+}
+
+/* ---- the list of sections ---- */
+.tos-nav{position:sticky;top:96px}
+.tos-nav ol{list-style:none;margin-top:20px;border-left:1px solid var(--ink-16)}
+.tos-nav a{
+  position:relative;
+  display:flex;align-items:baseline;gap:12px;
+  min-height:40px;
+  padding:9px 0 9px 18px;
+  font-size:13.5px;line-height:1.35;font-weight:500;
+  color:var(--ink-72);
+  transition:color .25s ease, transform .3s var(--ease-ui);
+}
+/* the marker on the rule beside the section being read */
+.tos-nav a::before{
+  content:"";
+  position:absolute;left:-1px;top:8px;bottom:8px;
+  width:2px;border-radius:2px;
+  background:var(--rust);
+  transform:scaleY(0);
+  transition:transform .35s var(--ease-ui);
+}
+.tos-nav a:hover{color:var(--ink);transform:translateX(3px)}
+.tos-nav a.on{color:var(--ink);font-weight:600}
+.tos-nav a.on::before{transform:none}
+.tos-nav a:focus-visible{outline:2px solid var(--rust);outline-offset:2px;border-radius:4px}
+.tos-n{font-size:10.5px;font-weight:600;letter-spacing:.14em;color:var(--rust);flex:none}
+.tos-print.glass-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  min-height:44px;margin-top:24px;padding:0 18px;
+  border-radius:999px;
+  font-size:13px;font-weight:600;
+}
+.tos-print svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round}
+
+/* ---- the text: a comfortable measure, each section under a numbered heading ---- */
+.tos-body{max-width:68ch}
+.tos-sec{padding-bottom:44px;margin-bottom:44px;border-bottom:1px solid var(--ink-16);scroll-margin-top:96px}
+.tos-h{
+  display:flex;align-items:baseline;gap:14px;
+  font-size:clamp(24px, 2.4vw, 32px);line-height:1.05;
+  text-wrap:balance;
+}
+.tos-h-n{flex:none;font-size:11px}
+.tos-sec p{margin-top:16px;font-size:15.5px;line-height:1.75;color:var(--ink-72)}
+.tos-sec p:first-of-type{margin-top:20px;color:var(--ink)}
+
+.tos-contact{
+  padding:32px;
+  border-radius:var(--r-img);
+  background:var(--paper-2);
+  box-shadow:inset 0 0 0 1px var(--ink-16);
+}
+.tos-contact h2{font-size:26px;line-height:1.05}
+.tos-contact p{margin-top:10px;font-size:14.5px;line-height:1.65;color:var(--ink-72)}
+.tos-mail.glass-btn{
+  display:inline-flex;align-items:center;
+  min-height:46px;margin-top:20px;padding:0 22px;
+  border-radius:999px;
+  font-size:14px;font-weight:600;
+}
+
+/* ---- tablet and phone: the list goes above the text and stops following ---- */
+@media (max-width:900px){
+  .tos-grid{grid-template-columns:minmax(0, 1fr);gap:40px;padding-top:36px}
+  .tos-nav{position:static}
+  .tos-nav ol{columns:2;column-gap:24px}
+  .tos-nav li{break-inside:avoid}
+}
+@media (max-width:560px){
+  .tos{padding-bottom:80px}
+  .tos-nav ol{columns:1}
+  .tos-sec{padding-bottom:32px;margin-bottom:32px}
+  .tos-sec p{font-size:15px}
+  .tos-contact{padding:24px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tos-nav a,.tos-nav a::before{transition:none}
+  .tos-nav a:hover{transform:none}
+}
+
+/* ---- printed or saved as PDF: the text alone ---- */
+@media print{
+  .hdr,.footer,.to-top,.grain,.tos-nav,.tos-contact .glass-btn,.page-sub{display:none !important}
+  .tos-grid{display:block;padding-top:0}
+  .tos-body{max-width:none}
+  .tos-sec{break-inside:avoid;border-color:#ccc}
+  .tos-sec p{color:#000}
+  .sr{opacity:1 !important;transform:none !important;animation:none !important}
+}

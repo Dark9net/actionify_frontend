@@ -1,0 +1,128 @@
+/* =====================================================
+   3 · HOW IT WORKS
+   ===================================================== */
+.facts{
+  position:relative;
+  min-height:var(--vh);
+  display:flex;align-items:center;
+  padding:72px 24px;
+  background:var(--paper); /* the one ground below Our promise */
+}
+.facts-wrap{
+  width:min(1180px, 100%);
+  margin:0 auto;
+  border-top:1px solid var(--ink-16);
+  padding-top:44px;
+  display:grid;
+  grid-template-columns:1.12fr 1.12fr .96fr;
+  gap:56px;
+  align-items:start;
+}
+.f-label{
+  color:var(--rust);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .7s ease, transform .9s var(--ease-out);
+}
+.in .f-label{opacity:1;transform:none}
+.f-title{
+  margin-top:22px;
+  font-size:clamp(34px, 4.25vw, 66px);
+  line-height:.98;
+  letter-spacing:.005em;
+  --step:30ms;
+}
+.f-title .word{display:block;white-space:nowrap}
+.badge-row{
+  margin-top:40px;
+  display:flex;align-items:center;gap:18px;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .8s ease .9s, transform 1s var(--ease-out) .9s;
+}
+.in .badge-row{opacity:1;transform:none}
+.badge{width:84px;height:84px;position:relative;display:block;border-radius:50%}
+.badge svg{position:relative;z-index:1;width:100%;height:100%;overflow:visible;transition:transform .4s var(--ease-ui)}
+/* the ring turns slowly for a few rounds, then rests (nothing loops past ~48 s) */
+.badge .ticks{transform-origin:42px 42px;animation:spin 16s linear 3;stroke:var(--rust);stroke-width:1.1;fill:none;transition:stroke .25s ease-out}
+.badge .tri{fill:var(--ink);transform-origin:43px 42px;transition:transform .35s var(--ease-ui)}
+.badge::before{
+  /* a disc fills in behind the play mark under the pointer */
+  content:"";
+  position:absolute;inset:22px;
+  border-radius:50%;
+  background:var(--paper);
+  box-shadow:0 0 0 1px rgb(67 40 42 / .1);
+  transform:scale(.6);opacity:0;
+  transition:transform .35s var(--ease-ui), opacity .25s ease-out;
+}
+@media (hover:hover) and (pointer:fine){
+  .badge:hover svg{transform:scale(1.05)}
+  .badge:hover .ticks{stroke:var(--ink)}
+  .badge:hover .tri{transform:scale(1.12)}
+  .badge:hover::before{transform:none;opacity:1}
+}
+.badge:active svg{transform:scale(.96)}
+.badge-row .label{transition:color .25s ease-out}
+.badge-row:has(.badge:hover) .label{color:var(--rust)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.f-copy{
+  font-size:14px;
+  line-height:1.72;
+  color:rgba(67,40,42,.88); /* body copy: 7.9:1 on paper-2 */
+  max-width:46ch;
+  opacity:0;transform:translateY(22px);
+  transition:opacity .8s ease .55s, transform 1s var(--ease-out) .55s;
+}
+.in .f-copy{opacity:1;transform:none}
+.f-table{
+  margin-top:30px;
+  border-top:1px solid var(--ink-16);
+  opacity:0;transform:translateY(22px);
+  transition:opacity .8s ease .75s, transform 1s var(--ease-out) .75s;
+}
+.in .f-table{opacity:1;transform:none}
+.f-row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+  padding:15px 0 14px;
+  border-bottom:1px solid var(--ink-16);
+  opacity:0;
+  transition:opacity .7s ease calc(.95s + var(--r) * 130ms);
+}
+.in .f-row{opacity:1}
+/* the section's one action, at the end of its story */
+.f-cta{margin-top:30px;--wait:1.5s}
+
+/* the keyboard never waits for an entrance: a focused control shows at once */
+.badge-row:focus-within{opacity:1;transform:none;transition:none}
+.f-row .k{color:var(--ink)}
+.f-row .v{
+  font-family:var(--sans);font-weight:500;
+  font-size:12.5px;letter-spacing:.02em;
+  color:var(--rust);text-align:right;
+}
+
+/* the portrait: its entrance is the dealt moment (picture-develops, film look), which the moment's own
+   CSS and script run on the <img>; here only the frame */
+.portrait{
+  position:relative;
+  aspect-ratio:2 / 3;
+  overflow:hidden;
+  border-radius:var(--r-img);
+  background:var(--paper);
+  margin:0;
+}
+.portrait > img{display:block;width:100%;height:100%;object-fit:cover}
+
+@media (max-width:760px){
+  .facts{padding:64px 20px}
+  .facts-wrap{grid-template-columns:1fr;gap:40px;padding-top:32px}
+  .f-title{font-size:12vw}
+  .badge-row{margin-top:28px}
+  .f-copy{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .f-label,.badge-row,.f-copy,.f-table,.f-row{opacity:1;transform:none;clip-path:none;transition:none!important}
+  .badge .ticks{animation:none}
+  .badge svg,.badge .tri,.badge::before{transition:none}
+  .badge:hover svg,.badge:hover .tri{transform:none}
+}

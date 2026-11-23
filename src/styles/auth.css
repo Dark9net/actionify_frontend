@@ -1,0 +1,705 @@
+/* =====================================================
+   SIGN IN (/login, src/pages/auth): a landscape film across the whole screen, the form in the middle
+   on a frosted card, and "Forgot password?" in a small window.
+   ===================================================== */
+.au{
+  position:relative;
+  isolation:isolate;
+  display:grid;place-items:center;
+  grid-template-columns:minmax(0, 1fr); /* the card may shrink to the screen, never push past it */
+  min-height:100vh;min-height:100svh;
+  padding:calc(var(--nav) + 24px) 20px 48px;
+  background:#faf8f5; /* cream, while the film loads */
+}
+
+/* the film: fixed to the screen, so a long form scrolls over it; no overlay, framed from the bottom */
+.au-bg{position:fixed;inset:0;z-index:-1;background:#faf8f5}
+.au-bg video{
+  width:100%;height:100%;
+  object-fit:cover;object-position:50% 100%;
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+.au-bg.is-ready video{opacity:1}
+
+/* ---------- the card in the middle: wide, see-through, the film shows behind it ---------- */
+.au-side{
+  width:min(1040px, 100%);
+  min-width:0;
+  padding:clamp(28px, 3.6vw, 48px);
+  border-radius:32px;
+  /* clear glass: the film shows through, softened just enough that the words read over its darkest
+     part (the trees). Any clearer and the small print sinks into the green. */
+  background:linear-gradient(180deg, rgb(255 255 255 / .34), rgb(255 255 255 / .42));
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);
+  backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .6),
+    inset 0 0 0 1px rgb(255 255 255 / .38),
+    0 40px 90px -50px rgb(36 22 23 / .45);
+  opacity:0;transform:translateY(24px) scale(.985);
+  transition:opacity .8s ease .05s, transform 1s var(--ease-rise) .05s;
+}
+.au.in .au-side{opacity:1;transform:none}
+/* while the page asks whether this browser is already signed in: the film only, no card (it would
+   flash on the way through to the panel); also under reduced motion, where the card has no entrance */
+.au.au--checking .au-side{visibility:hidden}
+.au-inner{width:100%}
+.au-title{
+  margin-top:14px;
+  font-size:clamp(40px, 4.4vw, 64px);
+  line-height:.94;
+  letter-spacing:-.01em;
+}
+.au-intro{
+  margin-top:16px;
+  max-width:40ch;
+  font-size:14.5px;line-height:1.65;
+  color:var(--ink-72);
+}
+
+/* everything on this side rises in once, one after another */
+.au-rise{
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .7s ease calc(.12s + var(--i, 0) * 70ms), transform .9s var(--ease-rise) calc(.12s + var(--i, 0) * 70ms);
+}
+.au.in .au-rise{opacity:1;transform:none}
+
+/* ---- the top row: the heading on one side, the tabs on the other ---- */
+.au-top{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
+  padding-bottom:26px;
+  border-bottom:1px solid rgb(67 40 42 / .16);
+}
+.au-top-text{min-width:0}
+.au-top .au-h2{font-size:clamp(28px, 2.6vw, 36px)}
+.au-top .au-tabs{flex:none;width:340px;margin-top:0}
+
+/* ---- the two columns: the account form, then the gallery code beside it ---- */
+.au-cols{
+  display:grid;
+  grid-template-columns:minmax(0, 1.12fr) minmax(0, 1fr);
+  margin-top:30px;
+}
+.au-cols > *{min-width:0}
+.au-code{grid-template-columns:minmax(0, 1fr)}
+.au-cols .au-panel{margin-top:0;padding-right:clamp(28px, 4vw, 52px)}
+.au-cols .au-form{margin-top:0}
+.au-code-col{padding-left:clamp(28px, 4vw, 52px);border-left:1px solid rgb(67 40 42 / .16)}
+.au-code-col .au-code{margin-top:0}
+.au-code-col .au-or{display:none}
+.au-code-note{margin-bottom:8px}
+/* the gallery's 24 hours are up (?gallery=ended): a warm note above the code */
+.au-ended{
+  display:flex;gap:10px;align-items:flex-start;
+  margin-top:12px;padding:11px 13px;
+  border-radius:12px;
+  font-size:13.4px;line-height:1.55;color:var(--ink);
+  background:rgb(233 180 140 / .28);
+  box-shadow:inset 0 0 0 1px rgb(142 81 41 / .22);
+}
+.au-ended svg{width:18px;height:18px;flex:none;margin-top:1px;fill:none;stroke:var(--rust);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.au-ended b{font-weight:650}
+
+/* ---- the two tabs, a pill sliding under the one that is open ---- */
+.au-tabs{
+  position:relative;
+  display:grid;grid-template-columns:1fr 1fr;
+  margin-top:30px;
+  padding:4px;
+  border-radius:999px;
+  /* a recessed pane of glass: the open tab sits on a raised pane inside it */
+  background:linear-gradient(180deg, rgb(67 40 42 / .06), rgb(255 255 255 / .22));
+  -webkit-backdrop-filter:blur(12px) saturate(1.4);backdrop-filter:blur(12px) saturate(1.4);
+  box-shadow:inset 0 1px 2px rgb(36 22 23 / .1), inset 0 0 0 1px rgb(67 40 42 / .1), 0 1px 0 rgb(255 255 255 / .6);
+}
+.au-tab-pill{
+  position:absolute;
+  top:4px;bottom:4px;left:4px;
+  width:calc(50% - 4px);
+  border-radius:999px;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .8), rgb(255 255 255 / .35) 55%, rgb(255 255 255 / .5)),
+    rgb(255 251 244 / .4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .95),
+    inset 0 0 0 1px rgb(255 255 255 / .6),
+    0 1px 2px rgb(36 22 23 / .12),
+    0 10px 22px -12px rgb(36 22 23 / .45);
+  transition:translate .5s var(--ease-ui);
+}
+.au-tabs[data-mode="signup"] .au-tab-pill{translate:100% 0}
+.au-tab{
+  position:relative;
+  min-height:44px;
+  border-radius:999px;
+  font:600 13px/1 var(--sans);
+  letter-spacing:.01em;
+  color:var(--ink-72);
+  transition:color .3s ease;
+}
+.au-tab[aria-selected="true"]{color:var(--ink)}
+.au-tab:not([aria-selected="true"]):hover{color:var(--ink)}
+.au-tab:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+
+/* ---- the panel: the form that is open slides in from its tab's side ---- */
+.au-panel{margin-top:30px}
+.au-swap{animation:au-swap .5s var(--ease-ui) both}
+.au-swap[data-from="left"]{--dx:-18px}
+.au-swap[data-from="right"]{--dx:18px}
+@keyframes au-swap{from{opacity:0;transform:translateX(var(--dx))}}
+.au-h2{font-size:26px;line-height:1}
+.au-note{margin-top:8px;font-size:13.4px;line-height:1.6;color:var(--ink-72)}
+
+.au-form{display:grid;gap:22px;margin-top:24px}
+
+/* the password: the eye button sits on the underline's right */
+.au-pw-box{position:relative}
+.au-pw-box input{padding-right:50px !important}
+.au-pw-box .au-eye.glass-btn{
+  position:absolute;right:0;top:50%;
+  width:38px;height:38px;
+  margin-top:-19px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  color:var(--ink-72);
+}
+.au-pw-box .au-eye.glass-btn:hover{color:var(--ink)}
+.au-pw-box .au-eye[aria-pressed="true"]{color:var(--rust)}
+.au-eye:focus-visible{outline:2px solid var(--rust);outline-offset:-2px}
+.au-eye svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.eye-slash{stroke-dasharray:23;stroke-dashoffset:23;transition:stroke-dashoffset .3s var(--ease-ui)}
+.eye-slash.on{stroke-dashoffset:0}
+.au-caps{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:500;color:var(--rust);
+  animation:au-pop .3s var(--ease-ui) both;
+}
+.au-caps::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rust)}
+@keyframes au-pop{from{opacity:0;transform:translateY(-4px)}}
+
+/* strength: four bars fill and change colour with the score */
+.au-meter{display:flex;align-items:center;gap:12px}
+.au-meter-bars{display:grid;grid-template-columns:repeat(4, 22px);gap:4px;flex:none}
+.au-meter-bars i{
+  height:4px;border-radius:2px;
+  background:var(--ink-16);
+  position:relative;overflow:hidden;
+}
+.au-meter-bars i::after{
+  content:"";position:absolute;inset:0;
+  background:var(--bar, var(--ink));
+  transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .4s var(--ease-ui), background-color .3s ease;
+}
+.au-meter[data-score="1"]{--bar:var(--error)}
+.au-meter[data-score="2"]{--bar:#B5772F}
+.au-meter[data-score="3"]{--bar:var(--rust)}
+.au-meter[data-score="4"]{--bar:#3F6B45}
+.au-meter[data-score="1"] i:nth-child(-n+1)::after,
+.au-meter[data-score="2"] i:nth-child(-n+2)::after,
+.au-meter[data-score="3"] i:nth-child(-n+3)::after,
+.au-meter[data-score="4"] i:nth-child(-n+4)::after{transform:none}
+.au-meter i:nth-child(2)::after{transition-delay:40ms}
+.au-meter i:nth-child(3)::after{transition-delay:80ms}
+.au-meter i:nth-child(4)::after{transition-delay:120ms}
+.au-meter-word{font-size:12px;line-height:1.4;color:var(--ink-72)}
+
+/* remember me and forgot password, on one line */
+.au-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:-4px}
+.au-check{
+  position:relative;
+  display:inline-flex;align-items:flex-start;gap:10px;
+  min-height:44px;padding-top:12px;
+  font-size:13.4px;line-height:1.45;
+  cursor:pointer;
+}
+.au-check input{position:absolute;opacity:0;width:1px;height:1px}
+.au-box{
+  flex:none;
+  display:grid;place-items:center;
+  width:18px;height:18px;margin-top:0;
+  border-radius:5px;
+  box-shadow:inset 0 0 0 1.5px rgb(67 40 42 / .5);
+  transition:background-color .2s ease, box-shadow .2s ease, transform .15s var(--ease-ui);
+}
+.au-box svg{width:12px;height:12px;fill:none;stroke:var(--paper);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:12;stroke-dashoffset:12;transition:stroke-dashoffset .3s var(--ease-ui) .05s}
+.au-check:hover .au-box{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.au-check:active .au-box{transform:scale(.9)}
+.au-check input:checked + .au-box{background:var(--ink);box-shadow:none}
+.au-check input:checked + .au-box svg{stroke-dashoffset:0}
+.au-check input:focus-visible + .au-box{outline:2px solid var(--rust);outline-offset:3px}
+.au-link{
+  position:relative;z-index:1;
+  font-weight:600;color:var(--rust);
+  background:linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  padding-bottom:1px;
+  transition:background-size .35s var(--ease-ui), color .2s ease;
+}
+.au-link:hover{background-size:0 1px;color:var(--ink)}
+.au-link:focus-visible{outline:2px solid var(--rust);outline-offset:2px;border-radius:3px}
+.au-terms.has-error .au-box{box-shadow:inset 0 0 0 1.5px var(--error)}
+.au-terms .field-error{margin:4px 0 0 28px}
+
+/* quiet text buttons: an underline draws in on hover */
+.au-textbtn.glass-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;
+  padding:0 18px;
+  border-radius:999px;
+  font:600 13px/1 var(--sans);
+}
+.au-textbtn.glass-btn:disabled{opacity:.55;cursor:default;translate:none}
+.au-textbtn.glass-btn:disabled::after{display:none}
+.au-forgot.glass-btn,.au-forgot.glass-btn:hover{color:var(--rust)}
+
+/* errors from the platform, and the "it worked" line under the code */
+.au-alert,.au-ok{
+  display:flex;gap:10px;
+  padding:12px 14px;
+  border-radius:12px;
+  font-size:13px;line-height:1.5;
+  animation:au-pop .35s var(--ease-ui) both;
+}
+.au-alert{background:rgb(156 43 31 / .08);color:var(--error);box-shadow:inset 0 0 0 1px rgb(156 43 31 / .22)}
+.au-ok{background:rgb(63 107 69 / .09);color:#2F5535;box-shadow:inset 0 0 0 1px rgb(63 107 69 / .24)}
+
+/* the main button: the site's ink pill across the form, a spinner while it works */
+.au-submit{width:100%;min-height:52px;font-size:11px}
+.au-submit[aria-busy="true"]{cursor:progress;opacity:.85}
+.au-submit.glass-btn{border-radius:999px}
+.au-spin{
+  width:16px;height:16px;flex:none;
+  border-radius:50%;
+  border:2px solid currentColor;border-right-color:transparent;
+  animation:au-spin .7s linear infinite;
+}
+@keyframes au-spin{to{transform:rotate(1turn)}}
+
+/* after a form has gone through */
+.au-done{outline:none;padding-top:6px;animation:au-swap .5s var(--ease-ui) both;--dx:0px}
+.au-done-tick svg{width:56px;height:56px;fill:none;stroke:var(--rust);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.au-done-tick circle{stroke-dasharray:114;stroke-dashoffset:114;animation:au-draw .7s var(--ease-ui) .1s forwards;stroke:rgb(142 81 41 / .35)}
+.au-done-tick path{stroke-dasharray:24;stroke-dashoffset:24;animation:au-draw .45s var(--ease-ui) .55s forwards}
+@keyframes au-draw{to{stroke-dashoffset:0}}
+.au-done-title{margin-top:18px;font-size:28px;line-height:1}
+.au-done-note{margin-top:10px;font-size:13.4px;line-height:1.65;color:var(--ink-72);max-width:42ch}
+.au-done-actions{display:grid;gap:8px;margin-top:24px;justify-items:center}
+
+/* ---- the gallery code ---- */
+.au-code{display:grid;gap:10px;margin-top:30px}
+.au-or{height:1px;margin-bottom:16px;background:var(--ink-16)}
+.au-code-row{
+  display:flex;align-items:center;gap:12px;
+  padding:0 16px;
+  border-radius:16px;
+  background:rgb(255 255 255 / .38);
+  box-shadow:inset 0 0 0 1px rgb(67 40 42 / .2);
+  transition:box-shadow .2s ease, background-color .2s ease;
+}
+.au-code-row:hover{box-shadow:inset 0 0 0 1px rgb(67 40 42 / .4)}
+.au-code-row:focus-within{background:rgb(255 255 255 / .6);box-shadow:inset 0 0 0 1.5px var(--rust)}
+.au-code-row.has-error{box-shadow:inset 0 0 0 1.5px var(--error)}
+.au-code-ico{width:20px;height:20px;flex:none;fill:none;stroke:var(--ink-72);stroke-width:1.5;stroke-linejoin:round}
+.au-code-row input{
+  flex:1;min-width:0;
+  height:54px;
+  border:0;background:none;outline:none;
+  font:600 15px/1 var(--sans);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.au-code-row input::placeholder{color:rgb(67 40 42 / .45);letter-spacing:.04em;text-transform:none}
+/* a small tick once the code is long enough to try */
+.au-code-ok{
+  flex:none;
+  display:grid;place-items:center;
+  width:22px;height:22px;
+  border-radius:50%;
+  background:#3F6B45;
+  transform:scale(0);
+  transition:transform .35s var(--ease-spring);
+}
+.au-code-ok svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.au-code-row.is-ready .au-code-ok{transform:none}
+
+/* the camera button at the end of the code field, and the code's look once a scan filled it */
+.au-code-row{padding-right:6px}
+.au-scan-btn.glass-btn{
+  flex:none;
+  display:grid;place-items:center;
+  width:44px;height:44px;
+  border-radius:12px;
+  color:var(--ink);
+}
+.au-scan-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.au-scan-btn:hover svg{color:var(--rust)}
+.au-code-row.is-scanned input{animation:au-code-in .6s var(--ease-ui)}
+@keyframes au-code-in{0%{color:var(--rust);letter-spacing:.3em}100%{letter-spacing:.1em}}
+
+/* ---- the QR scanner window (QrScanner.jsx) ---- */
+dialog.au-scan{width:min(460px, calc(100vw - 24px))}
+.au-viewer{
+  position:relative;
+  margin-top:22px;
+  aspect-ratio:1;
+  border-radius:22px;
+  overflow:hidden;
+  background:#1c1112;
+  box-shadow:inset 0 0 0 1px rgb(255 255 255 / .06), 0 20px 40px -24px rgb(36 22 23 / .7);
+}
+.au-viewer video{width:100%;height:100%;object-fit:cover;display:block}
+.au-viewer.is-off video{opacity:0}
+.au-viewer-idle{
+  position:absolute;left:50%;top:50%;
+  width:54px;height:54px;margin:-27px 0 0 -27px;
+  fill:none;stroke:rgb(236 227 209 / .5);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;
+}
+/* the viewfinder: four amber corners round the middle, a scan line running down between them */
+.au-frame{position:absolute;inset:18%;pointer-events:none}
+.au-frame i{
+  position:absolute;width:26%;height:26%;
+  border:3px solid var(--rust-light);
+  filter:drop-shadow(0 0 6px rgb(233 180 140 / .5));
+  transition:border-color .3s ease, transform .45s var(--ease-spring);
+}
+.au-frame i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0;border-radius:14px 0 0 0}
+.au-frame i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0;border-radius:0 14px 0 0}
+.au-frame i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0;border-radius:0 0 0 14px}
+.au-frame i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0;border-radius:0 0 14px 0}
+.au-viewer[data-status="scanning"] .au-frame i{animation:au-breathe 2.4s ease-in-out infinite}
+@keyframes au-breathe{50%{transform:scale(1.04)}}
+.au-frame-line{
+  position:absolute;left:4%;right:4%;top:0;
+  height:2px;border-radius:2px;
+  background:var(--rust-light);
+  box-shadow:0 0 16px 4px rgb(233 180 140 / .55);
+  animation:au-scanline 2.2s ease-in-out infinite;
+}
+@keyframes au-scanline{0%{top:4%;opacity:0}12%,88%{opacity:1}100%{top:96%;opacity:0}}
+/* found: the corners close in and turn green, a tick lands in the middle */
+.au-viewer.is-found .au-frame i{border-color:#7FB287;transform:scale(.86);animation:none}
+.au-found{
+  position:absolute;left:50%;top:50%;
+  width:64px;height:64px;margin:-32px 0 0 -32px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:#3F6B45;
+  box-shadow:0 0 0 8px rgb(63 107 69 / .3);
+  animation:au-tick .45s var(--ease-spring) both;
+}
+.au-found svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.au-scan-msg{margin-top:14px;text-align:center;font-size:13.4px;font-weight:600;color:var(--ink)}
+.au-scan .au-alert{margin-top:12px}
+.au-scan .au-dlg-actions{margin-top:16px}
+.au-btn-ico{width:17px;height:17px;margin-right:8px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- slide to open: a handle dragged along a pill (SlideToOpen.jsx); --x is 0 to 1 ---- */
+.au-slide{
+  --knob:48px;
+  position:relative;
+  height:58px;
+  margin-top:6px;
+  padding:5px;
+  border-radius:999px;
+  /* a pane of frosted glass, like the site's booking buttons */
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .62), rgb(255 255 255 / .16) 55%, rgb(255 255 255 / .3)),
+    rgb(255 251 244 / .34);
+  -webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .9),
+    inset 0 -1px 0 rgb(67 40 42 / .08),
+    inset 0 0 0 1px rgb(255 255 255 / .55),
+    0 1px 2px rgb(36 22 23 / .1),
+    0 14px 30px -16px rgb(36 22 23 / .5);
+  overflow:hidden;
+  isolation:isolate;
+  user-select:none;-webkit-user-select:none;
+  touch-action:pan-y;
+  transition:background-color .3s ease, opacity .3s ease;
+}
+.au-slide[data-state="locked"]{opacity:.7}
+/* the track fills in amber behind the handle */
+.au-slide-fill{
+  position:absolute;top:5px;bottom:5px;left:5px;
+  width:calc(var(--knob) + var(--x) * (100% - var(--knob) - 10px));
+  border-radius:999px;
+  background:linear-gradient(90deg, rgb(233 180 140 / .2), rgb(233 180 140 / .75));
+  z-index:-1;
+  transition:width .55s var(--ease-spring);
+}
+.au-slide.is-dragging .au-slide-fill{transition:none}
+.au-slide[data-state="locked"] .au-slide-fill{opacity:0}
+/* the label, with a band of light running through it while the slide is ready */
+.au-slide-label{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  padding-left:calc(var(--knob) + 8px);
+  font:600 12px/1 var(--sans);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-72);
+  background:linear-gradient(100deg, rgb(67 40 42 / .62) 40%, var(--rust) 50%, rgb(67 40 42 / .62) 60%) 0 0 / 250% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  opacity:calc(1 - var(--x) * 1.6);
+  animation:au-slide-shine 2.8s linear infinite;
+  pointer-events:none;
+}
+@keyframes au-slide-shine{from{background-position:100% 0}to{background-position:-50% 0}}
+.au-slide[data-state="locked"] .au-slide-label{
+  animation:none;
+  background:none;
+  -webkit-text-fill-color:currentColor;
+  color:var(--ink-72);
+  opacity:1;
+}
+.au-slide[data-state="busy"] .au-slide-label{opacity:1;animation:none;background:none;-webkit-text-fill-color:currentColor;color:var(--ink);padding-left:0;padding-right:calc(var(--knob) + 8px)}
+/* the handle */
+.au-slide-knob{
+  position:absolute;top:5px;
+  /* the track's own width sets the run, so it fits any screen */
+  left:calc(5px + var(--x) * (100% - var(--knob) - 10px));
+  width:var(--knob);height:var(--knob);
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--paper);
+  box-shadow:0 1px 0 rgb(255 255 255 / .18) inset, 0 6px 14px -4px rgb(36 22 23 / .55);
+  cursor:grab;
+  touch-action:none;
+  transition:left .55s var(--ease-spring), background-color .25s ease, scale .2s var(--ease-ui);
+}
+.au-slide-knob svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease-ui)}
+.au-slide.is-dragging .au-slide-knob{transition:none;cursor:grabbing;scale:1.04}
+.au-slide[data-state="ready"] .au-slide-knob{animation:au-slide-nudge 2.8s var(--ease-ui) 1s infinite}
+@keyframes au-slide-nudge{0%,70%,100%{translate:0}80%{translate:8px}90%{translate:0}}
+.au-slide-knob:hover svg{transform:translateX(2px)}
+.au-slide[data-state="near"] .au-slide-knob,.au-slide[data-state="busy"] .au-slide-knob{background:var(--rust)}
+.au-slide[data-state="locked"] .au-slide-knob{background:rgb(67 40 42 / .35);color:rgb(236 227 209 / .85);cursor:not-allowed;box-shadow:none}
+.au-slide-knob:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+.au-slide[data-state="locked"] .au-slide-knob:focus-visible{outline-color:var(--rust)}
+.au-slide .au-spin{color:var(--paper)}
+
+.au-code-hint{font-size:12.5px;line-height:1.5;color:var(--ink-72)}
+
+/* ---------- forgot password: a small window in the middle of the screen ---------- */
+dialog.au-dialog{
+  width:min(440px, calc(100vw - 32px));
+  max-width:none;max-height:calc(100dvh - 32px);
+  margin:auto;padding:0;border:0;
+  overflow:auto;
+  border-radius:26px;
+  background:var(--paper);
+  color:var(--ink);
+  box-shadow:0 40px 90px -30px rgb(36 22 23 / .65), 0 0 0 1px rgb(255 255 255 / .5) inset;
+}
+dialog.au-dialog[open]{animation:au-dlg-in .5s var(--ease-ui) both}
+dialog.au-dialog[data-closing]{animation:au-dlg-out .26s cubic-bezier(.5,0,.75,.3) both}
+@keyframes au-dlg-in{from{opacity:0;transform:translateY(18px) scale(.96)}}
+@keyframes au-dlg-out{to{opacity:0;transform:translateY(10px) scale(.97)}}
+dialog.au-dialog::backdrop{
+  background:rgb(36 22 23 / .42);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  animation:veil-in .4s ease both;
+}
+dialog.au-dialog[data-closing]::backdrop{animation:veil-out .26s ease both}
+
+.au-dlg-in{position:relative;padding:34px 34px 30px}
+.au-dlg-in .au-dlg-close.glass-btn{
+  position:absolute;top:14px;right:14px;
+  width:44px;height:44px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  color:var(--ink-72);
+}
+.au-dlg-close svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;transition:transform .35s var(--ease-ui)}
+.au-dlg-close:hover svg{transform:rotate(90deg)}
+.au-dlg-close:focus-visible{outline:2px solid var(--rust);outline-offset:2px}
+.au-dlg-step{animation:au-swap .45s var(--ease-ui) both;--dx:0px}
+
+.au-badge{
+  position:relative;
+  display:grid;place-items:center;
+  width:54px;height:54px;
+  border-radius:16px;
+  background:var(--paper-2);
+  box-shadow:inset 0 0 0 1px var(--ink-16);
+  color:var(--rust);
+}
+.au-badge svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.au-badge--sent{background:var(--ink);color:var(--paper);box-shadow:none}
+.au-mail-flap{stroke-dasharray:24;stroke-dashoffset:24;animation:au-draw .5s var(--ease-ui) .15s forwards}
+.au-badge-tick{
+  position:absolute;right:-6px;bottom:-6px;
+  width:22px;height:22px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:#3F6B45;
+  box-shadow:0 0 0 3px var(--paper);
+  animation:au-tick .45s var(--ease-spring) .5s both;
+}
+.au-badge-tick svg{width:12px;height:12px;stroke:#fff;stroke-width:2}
+@keyframes au-tick{from{transform:scale(0)}}
+.au-dlg-title{margin-top:20px;font-size:28px;line-height:1}
+.au-dlg-note{margin-top:10px;font-size:13.4px;line-height:1.65;color:var(--ink-72)}
+.au-dlg-note strong{color:var(--ink);font-weight:600;overflow-wrap:anywhere}
+.au-dlg-form{display:grid;gap:20px;margin-top:24px}
+.au-dlg-actions{display:grid;gap:4px;margin-top:24px;justify-items:center}
+.au-dlg-actions .au-submit{margin-bottom:6px}
+
+/* ---------- the glass on this page, warmed with the theme's light amber (--rust-light) ----------
+   Every button on the sign-in page and in its window: a pale pane washed with amber towards the foot,
+   an amber-tinted rim and drop. The main buttons carry a little more amber so they lead.
+   Hover: the wash deepens, the rim warms, the band of light that sweeps across is warm too. */
+.au{
+  --tint-top:rgb(255 255 255 / .62);
+  --tint-mid:rgb(246 222 200 / .32);
+  --tint-foot:rgb(233 180 140 / .34);
+  --tint-rim:rgb(233 180 140 / .5);
+  --tint-drop:rgb(142 81 41 / .4);
+}
+.au .glass-btn.glass-btn{
+  background:
+    linear-gradient(180deg, var(--tint-top), var(--tint-mid) 55%, var(--tint-foot)),
+    rgb(255 248 238 / .3);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .9),
+    inset 0 -1px 0 rgb(142 81 41 / .12),
+    inset 0 0 0 1px var(--tint-rim),
+    0 1px 2px rgb(142 81 41 / .14),
+    0 12px 28px -14px var(--tint-drop);
+}
+.au .glass-btn::after{
+  background:linear-gradient(105deg, transparent 28%, rgb(255 244 230 / .85) 46%, rgb(233 180 140 / .3) 56%, transparent 70%);
+}
+@media (hover:hover) and (pointer:fine){
+  .au .glass-btn.glass-btn:hover{
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / .74), rgb(246 222 200 / .45) 55%, rgb(233 180 140 / .5)),
+      rgb(255 248 238 / .4);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / .95),
+      inset 0 -1px 0 rgb(142 81 41 / .14),
+      inset 0 0 0 1px rgb(233 180 140 / .75),
+      0 2px 4px rgb(142 81 41 / .14),
+      0 18px 34px -14px rgb(142 81 41 / .5);
+  }
+}
+
+/* the main buttons: more amber, so Sign in, Create account and Send reset link lead the form */
+.au .au-submit.glass-btn{
+  background:
+    linear-gradient(180deg, rgb(255 246 236 / .7), rgb(240 200 166 / .45) 55%, rgb(233 180 140 / .6)),
+    rgb(250 232 214 / .4);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .9),
+    inset 0 -1px 0 rgb(142 81 41 / .18),
+    inset 0 0 0 1px rgb(233 180 140 / .7),
+    0 1px 2px rgb(142 81 41 / .16),
+    0 14px 30px -14px rgb(142 81 41 / .5);
+}
+@media (hover:hover) and (pointer:fine){
+  .au .au-submit.glass-btn:hover{
+    background:
+      linear-gradient(180deg, rgb(255 248 240 / .82), rgb(240 200 166 / .6) 55%, rgb(233 180 140 / .78)),
+      rgb(250 232 214 / .5);
+  }
+}
+
+/* the small round ones (the eye, the window's close) stay lighter */
+.au .au-eye.glass-btn,
+.au .au-dlg-close.glass-btn{
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .7), rgb(246 222 200 / .3) 60%, rgb(233 180 140 / .26)),
+    rgb(255 248 238 / .3);
+}
+
+/* the tabs: the open tab's pane in the same warm glass, the track washed with amber */
+.au .au-tabs{
+  background:linear-gradient(180deg, rgb(142 81 41 / .07), rgb(233 180 140 / .16));
+  box-shadow:inset 0 1px 2px rgb(142 81 41 / .12), inset 0 0 0 1px rgb(233 180 140 / .4), 0 1px 0 rgb(255 255 255 / .6);
+}
+.au .au-tab-pill{
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .82), rgb(246 222 200 / .5) 55%, rgb(233 180 140 / .45)),
+    rgb(255 248 238 / .4);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .95),
+    inset 0 0 0 1px rgb(233 180 140 / .6),
+    0 1px 2px rgb(142 81 41 / .14),
+    0 10px 22px -12px rgb(142 81 41 / .45);
+}
+
+/* the slide's track: the same warm glass */
+.au .au-slide{
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .62), rgb(246 222 200 / .32) 55%, rgb(233 180 140 / .34)),
+    rgb(255 248 238 / .3);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .9),
+    inset 0 -1px 0 rgb(142 81 41 / .12),
+    inset 0 0 0 1px rgb(233 180 140 / .5),
+    0 1px 2px rgb(142 81 41 / .14),
+    0 14px 30px -16px rgb(142 81 41 / .45);
+}
+
+/* ---------- tablet: the code goes under the form, the tabs under the heading ---------- */
+@media (max-width:900px){
+  .au-side{width:min(560px, 100%)}
+  .au-top{flex-direction:column;align-items:stretch;gap:20px}
+  .au-top .au-tabs{width:100%}
+  .au-cols{grid-template-columns:minmax(0, 1fr)}
+  .au-cols .au-panel{padding-right:0}
+  .au-code-col{padding-left:0;border-left:0}
+  .au-code-col .au-or{display:block}
+  .au-code-col .au-code{margin-top:30px}
+}
+
+/* ---------- phone: the card a little tighter, the film still behind it ---------- */
+@media (max-width:560px){
+  .au{padding:calc(var(--nav) + 12px) 12px 32px;place-items:start center}
+  .au-side{border-radius:24px;padding:26px 20px}
+  .au-title{font-size:40px}
+  .au-code-row input{font-size:16px}
+  .au-slide-label{font-size:11px;letter-spacing:.12em}
+  .au-row{flex-wrap:wrap;gap:0 16px}
+  .au-dlg-in{padding:28px 22px 24px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .au-rise,.au-side{opacity:1;transform:none;transition:none}
+  .au-bg video{transition:none}
+  .au-swap,.au-done,.au-dlg-step,.au-caps,.au-alert,.au-ok{animation:none}
+  .au-slide-label,.au-slide[data-state="ready"] .au-slide-knob{animation:none}
+  .au-slide-label{background:none;-webkit-text-fill-color:currentColor;color:var(--ink-72)}
+  .au-slide-fill,.au-slide-knob,.au-code-ok{transition:none}
+  .au-tab-pill,.au-meter-bars i::after,.eye-slash,.au-box svg{transition:none}
+  .au-done-tick circle,.au-done-tick path,.au-mail-flap{animation:none;stroke-dashoffset:0}
+  .au-badge-tick{animation:none}
+  .au-frame-line,.au-viewer .au-frame i,.au-found,.au-code-row.is-scanned input{animation:none}
+  .au-spin{animation-duration:1.6s}
+}
+
+/* ---------- the pages an emailed link opens (/verify-email, /reset-password): a narrower card ---------- */
+.au-side--narrow{width:min(480px, 100%)}
+.au-card-title{font-size:clamp(28px, 3vw, 34px)}
+.au-side--narrow .au-note{margin-top:12px}
+.au-side--narrow .au-alert{margin-top:18px}
+.au-card-done{padding-top:18px;text-align:center;display:grid;justify-items:center}
+.au-card-actions{margin-top:20px}
+.au-card-back{justify-self:center;font-size:13px}
+.au-spin.au-spin--inline{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-2px}
+
+/* ---------- "Resend the link": under the sign-up note, and under the sign-in alert ---------- */
+.au-done-sub{margin-top:8px}
+.au-resend{display:grid;justify-items:center;gap:4px;margin-top:14px}
+.au-form .au-resend{justify-items:start;margin-top:-8px}
+.au-resend .au-textbtn:disabled{opacity:.6;cursor:default;font-variant-numeric:tabular-nums}
+.au-resend-note{min-height:0;font-size:12.6px;line-height:1.5;color:var(--ink-72)}
+.au-resend-note:empty{display:none}
+.au-resend-note.is-error{color:var(--error)}

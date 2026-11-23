@@ -1,0 +1,272 @@
+/* =====================================================
+   OUR EQUIPMENT: the exploded camera, laid out part by part as the page scrolls.
+   --p (0 to 1) comes from useScrollProgress on the track; each part and callout
+   reads its own stretch of it: --a where it starts, --d how long it takes.
+   ===================================================== */
+.kit-track{
+  position:relative;
+  height:320vh; /* one pinned screen plus 2.2 screens of scroll to lay the kit out */
+  background:var(--paper);
+}
+.kit-stage{
+  position:sticky;top:0;
+  height:100vh;height:100svh;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  padding:calc(var(--nav) + 12px) 0 28px;
+}
+
+/* heading row: the title on the left; the line and a meter of how far the kit is laid out on the right */
+.kit-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:48px;
+  border-top:1px solid var(--ink-16);
+  padding-top:28px;
+}
+.kit-title{margin-top:16px;font-size:clamp(34px, 4.25vw, 66px);line-height:.98}
+.kit-side{max-width:36ch;padding-bottom:6px}
+.kit-intro{font-size:14px;line-height:1.6;color:var(--ink-72);text-wrap:pretty}
+.kit-meter{display:flex;align-items:center;gap:14px;margin-top:16px;color:var(--ink-72)}
+.kit-bar{position:relative;flex:1;height:1px;background:var(--ink-16);overflow:hidden}
+.kit-bar span{
+  position:absolute;inset:0;
+  background:var(--rust);
+  transform-origin:0 50%;
+  transform:scaleX(calc(var(--p, 1) / .82)); /* full once the last callout is in (about .82) */
+}
+
+/* the picture, with room above and below it for the labels */
+.kit-fig{flex:1;display:grid;place-items:center;min-height:0;padding:clamp(90px, 13vh, 130px) 0 clamp(84px, 12vh, 120px)} /* room for the labels above and below */
+.kit-box{
+  position:relative;
+  width:min(1080px, 100% - 48px, (100svh - 500px) * 2.38);
+}
+.kit-pic{position:relative;width:100%}
+/* a soft floor shadow, drawn here so it never splits with the parts */
+.kit-pic::before{
+  content:"";
+  position:absolute;left:4%;right:2%;bottom:-9%;
+  height:20%;
+  background:radial-gradient(closest-side, rgb(67 40 42 / .2), rgb(67 40 42 / .07) 60%, rgb(67 40 42 / 0));
+  opacity:clamp(0, var(--p, 1) / .4, 1);
+  pointer-events:none;
+}
+.kit-sr,
+.kit-part{
+  position:absolute;inset:0;
+  display:block;
+  width:100%;height:100%;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.kit-sr{opacity:0}
+
+/* a part: its own eased progress (--k, an ease-out), from just outside its place to its place */
+.kit-part{
+  --e:clamp(0, (var(--p, 1) - var(--a)) / var(--d), 1);
+  --k:calc(var(--e) * (2 - var(--e)));
+  opacity:var(--e);
+  transform:translate(calc(var(--dx) * (1 - var(--k))), calc(var(--dy) * (1 - var(--k))));
+  will-change:transform, opacity;
+}
+/* the body also settles from a touch smaller */
+.kit-part:nth-of-type(2){
+  transform:translateY(calc(var(--dy) * (1 - var(--k)))) scale(calc(.94 + .06 * var(--k)));
+}
+
+/* pins: a numbered dot on the part, and a hairline to its label that draws out from the dot */
+.kit-pin{
+  --e:clamp(0, (var(--p, 1) - var(--a)) / .1, 1);
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+.kit-dot{
+  position:absolute;
+  left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);
+  display:grid;place-items:center;
+  width:22px;height:22px;
+  margin:-11px 0 0 -11px;
+  border-radius:50%;
+  background:var(--rust);
+  color:#fff;
+  font-size:10px;font-weight:600;
+  box-shadow:0 0 0 4px rgb(142 81 41 / .22);
+  opacity:var(--e);
+  transform:scale(calc(.4 + .6 * var(--e)));
+}
+.kit-line{
+  position:absolute;
+  left:calc(var(--x) * 1%);top:calc(var(--top) * 1%);
+  width:1px;height:calc(var(--len) * 1%);
+  background:linear-gradient(var(--ink), var(--ink)) center / 1px 100% no-repeat;
+  opacity:.45;
+  transform-origin:50% 0;
+  transform:scaleY(clamp(0, (var(--e) - .2) / .6, 1));
+}
+.kit-pin.up .kit-line{transform-origin:50% 100%}
+
+/* labels: at the far end of each line, rising in as the line arrives */
+.kit-calls{list-style:none;position:absolute;inset:0;pointer-events:none}
+.kit-call{
+  --e:clamp(0, (var(--p, 1) - var(--a) - .05) / .08, 1);
+  position:absolute;
+  left:calc(var(--x) * 1%);top:calc(var(--to) * 1%);
+  width:clamp(140px, 15%, 190px);
+  padding:8px 0 0 12px;
+  border-left:1px solid var(--ink-16);
+  opacity:var(--e);
+  transform:translateY(calc((1 - var(--e)) * 10px));
+}
+.kit-call.up{translate:0 -100%;padding:0 0 8px 12px}
+.kit-call.end{translate:-100% 0;text-align:right;border-left:0;border-right:1px solid var(--ink-16);padding:8px 12px 0 0}
+.kit-call.up.end{translate:-100% -100%;padding:0 12px 8px 0}
+.kit-n{display:block;color:var(--rust);font-size:9.5px}
+.kit-call strong{display:block;margin-top:7px;font-size:14px;font-weight:600;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+.kit-call strong + span{display:block;margin-top:5px;font-size:12.5px;line-height:1.5;color:var(--ink-72)}
+
+/* ---------- narrower screens: labels that would meet their neighbour move to the other side of their line ---------- */
+@media (max-width:1180px){
+  .kit-call.up.end-narrow{translate:-100% -100%;text-align:right;border-left:0;border-right:1px solid var(--ink-16);padding:0 12px 8px 0}
+}
+
+/* ---------- tablets: smaller labels ---------- */
+@media (max-width:1023px){
+  .kit-head{gap:28px}
+  .kit-call{width:150px}
+  .kit-call strong{font-size:13px}
+  .kit-call strong + span{font-size:11.5px}
+}
+
+/* ---------- phones: the labels become a numbered list under the picture ---------- */
+@media (max-width:760px){
+  .kit-track{height:240vh}
+  .kit-stage{padding:calc(var(--nav) + 4px) 0 20px}
+  .kit-head{flex-direction:column;align-items:flex-start;gap:12px;padding-top:20px}
+  .kit-title{font-size:10.4vw;margin-top:12px}
+  .kit-intro{font-size:13px}
+  .kit-meter{margin-top:10px}
+  .kit-fig{padding:20px 0 0;place-items:center}
+  .kit-box{width:calc(100% - 40px)}
+  .kit-line{display:none}
+  .kit-dot{width:18px;height:18px;margin:-9px 0 0 -9px;font-size:9px;box-shadow:0 0 0 3px rgb(142 81 41 / .22)}
+  .kit-calls{
+    position:static;
+    margin-top:18px;
+    display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
+    gap:12px 16px;
+  }
+  .kit-call,.kit-call.up,.kit-call.end,.kit-call.up.end,.kit-call.up.end-narrow{
+    position:relative;left:auto;top:auto;translate:none;
+    width:auto;
+    padding:0 0 0 10px;
+    text-align:left;
+    border-right:0;border-left:1px solid var(--ink-16);
+  }
+  .kit-call strong{margin-top:4px;font-size:12.5px}
+  .kit-call strong + span{margin-top:3px;font-size:11.5px;line-height:1.45}
+}
+@media (max-width:760px) and (max-height:760px){
+  .kit-intro,.kit-call strong + span{display:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .kit-track{height:auto}
+  .kit-stage{position:relative;height:auto;padding-bottom:120px}
+  .kit-part,.kit-pin,.kit-call{--e:1}
+}
+
+/* =====================================================
+   BEHIND EVERY FRAME (Our Work): the exploded camera across the page.
+   --p runs from the band entering at the foot of the screen (0) to leaving at the top (1);
+   the camera drifts from right to left across it and opens out a touch as it reaches the middle.
+   ===================================================== */
+.kit-band{
+  position:relative;
+  overflow:hidden;
+  padding:24px 0 120px;
+  background:var(--paper);
+}
+.kit-band-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:48px;
+  border-top:1px solid var(--ink-16);
+  padding-top:44px;
+}
+.kit-band-title{margin-top:20px;font-size:clamp(34px, 4.25vw, 66px);line-height:.98}
+.kit-band-side{max-width:38ch;padding-bottom:6px}
+.kit-band-side p{font-size:14px;line-height:1.65;color:var(--ink-72);text-wrap:pretty}
+.kit-band-side .btn{margin-top:22px}
+.kit-band-pic{
+  --k:clamp(0, var(--p, .5) / .55, 1);
+  position:relative;
+  width:min(1320px, 100% - 48px);
+  margin:clamp(24px, 5vh, 56px) auto 0;
+}
+.kit-band-pic::before{
+  content:"";
+  position:absolute;left:6%;right:4%;bottom:-8%;
+  height:18%;
+  background:radial-gradient(closest-side, rgb(67 40 42 / .18), rgb(67 40 42 / .06) 60%, rgb(67 40 42 / 0));
+  opacity:var(--k);
+}
+.kit-band-pic img{
+  display:block;
+  width:100%;height:auto;
+  transform:translateX(calc((.5 - var(--p, .5)) * 14%)) scale(calc(.9 + var(--k) * .1));
+  opacity:calc(.35 + var(--k) * .65);
+  will-change:transform;
+}
+/* the rest of the kit: a grid of cards, two wide ones among them */
+.kit-gear{margin-top:clamp(72px, 10vh, 112px)}
+.kit-gear-label{display:block;padding-top:28px;border-top:1px solid var(--ink-16)}
+.kit-gear-grid{
+  list-style:none;
+  margin-top:28px;
+  display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:36px 20px;
+}
+.gear--wide{grid-column:span 2}
+.gear-photo{
+  position:relative;
+  margin:0;
+  height:clamp(170px, 17vw, 240px); /* one height for every card, wide ones too, so the rows line up */
+  overflow:hidden;
+  border-radius:var(--r-img);
+  background:var(--paper-2);
+  transition:transform .45s var(--ease-ui), box-shadow .45s var(--ease-ui);
+}
+.gear-photo img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-ui)}
+.gear-kind{
+  position:absolute;left:12px;top:12px;
+  padding:8px 11px 7px;
+  border-radius:999px;
+  background:rgb(245 239 228 / .9);
+  backdrop-filter:blur(8px);
+  color:var(--ink);
+  font-size:9.5px;
+  transition:background-color .3s ease-out, color .3s ease-out;
+}
+.gear-name{margin-top:16px;font-size:clamp(19px, 1.6vw, 24px);line-height:1.05;text-transform:none}
+.gear-text{margin-top:8px;font-size:13px;line-height:1.55;color:var(--ink-72);max-width:36ch}
+@media (hover:hover) and (pointer:fine){
+  .gear:hover .gear-photo{transform:translateY(-2px);box-shadow:0 22px 40px -26px rgb(36 22 23 / .5)}
+  .gear:hover .gear-photo img{transform:scale(1.03)}
+  .gear:hover .gear-kind{background:var(--ink);color:var(--paper)}
+}
+
+@media (max-width:1023px){
+  .kit-gear-grid{grid-template-columns:repeat(2, minmax(0, 1fr))}
+}
+@media (max-width:760px){
+  .kit-band{padding:8px 0 80px}
+  .kit-gear-grid{gap:28px 12px}
+  .gear-photo{height:34vw}
+  .gear-name{font-size:17px}
+  .gear-text{font-size:12px}
+  .kit-band-head{flex-direction:column;align-items:flex-start;gap:16px;padding-top:32px}
+  .kit-band-title{font-size:10.4vw}
+  .kit-band-pic{width:calc(100% - 24px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .kit-band-pic img{transform:none;opacity:1}
+  .gear-photo,.gear-photo img{transition:none}
+  .gear:hover .gear-photo,.gear:hover .gear-photo img{transform:none}
+}

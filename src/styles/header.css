@@ -1,0 +1,307 @@
+/* =====================================================
+   HEADER: logo left, page links centred, booking right.
+   It steps aside while the visitor reads down the page, leaving only the logo,
+   and comes back the moment they scroll up.
+   ===================================================== */
+.hdr{
+  position:fixed;
+  inset:0 0 auto;
+  z-index:1100; /* above the grain and the LENS section */
+  height:var(--nav);
+  color:var(--ink);
+  pointer-events:none; /* the bar's empty stretches never block the page below */
+  animation:hdr-enter .9s var(--ease-out) .15s both; /* once, on load */
+}
+@keyframes hdr-enter{from{opacity:0;transform:translateY(-10px)}}
+.hdr a,.hdr button{pointer-events:auto}
+
+/* the frosted bar behind everything; clear at the top of the page */
+.hdr-bar{
+  position:absolute;inset:0;
+  /* transparent: no band across the page; the logo pill and the link capsule carry their own frosting */
+  background:transparent;
+  opacity:0;
+  transition:opacity .2s ease-out;
+}
+.hdr[data-state="shown"] .hdr-bar{opacity:1;transition:opacity .32s var(--ease-ui)}
+/* how far down the page the visitor is: a rust hairline along the bar's foot */
+.hdr-bar::after{
+  content:"";
+  position:absolute;left:0;right:0;top:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--rust), var(--rust-light));
+  transform:scaleX(0);
+  transform-origin:left;
+}
+@supports (animation-timeline:scroll()){
+  .hdr-bar::after{
+    animation:hdr-progress linear both;
+    animation-timeline:scroll(root block);
+  }
+}
+@keyframes hdr-progress{to{transform:scaleX(1)}}
+
+.hdr-in{
+  position:relative;
+  height:100%;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:24px;
+}
+
+/* ---- logo: the one part that never leaves ---- */
+.hdr-logo{
+  position:relative;
+  justify-self:start;
+  display:inline-flex;align-items:center;gap:11px;
+  padding:6px 14px 6px 6px;
+  margin-left:-6px; /* the pill's padding sits outside the page's left edge line */
+  border-radius:999px;
+}
+.hdr-logo::before{
+  /* the frosted pill, shown only while the rest of the header is away */
+  content:"";
+  position:absolute;inset:0;
+  z-index:-1;
+  border-radius:inherit;
+  background:rgb(236 227 209 / .9);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 0 0 1px rgb(67 40 42 / .08), 0 8px 24px -12px rgb(36 22 23 / .45);
+  opacity:0;
+  transform:scale(.96);
+  transition:opacity .2s ease-out, transform .2s ease-out;
+}
+.hdr[data-state="hidden"] .hdr-logo::before,
+.hdr[data-state="shown"] .hdr-logo::before{
+  opacity:1;transform:none;
+  transition:opacity .32s var(--ease-ui), transform .4s var(--ease-ui);
+}
+/* the logo: the arrow alone on a transparent ground (no tile); it tilts on hover */
+.hdr-mark{
+  position:relative;
+  display:block;
+  width:34px;height:34px;
+  flex:none;
+  transition:transform .35s var(--ease-ui), filter .35s var(--ease-ui);
+  filter:drop-shadow(0 1px 1px rgb(255 244 218 / .5));
+}
+.hdr-mark svg{display:block;width:100%;height:100%}
+.hdr-name{display:flex;flex-direction:column;line-height:1}
+/* the wordmark (ACTIONIFY>), sized by the font size so the phone rule below shrinks it too */
+.hdr-title{
+  display:block;
+  font-size:20px;
+  height:.72em;width:auto;
+}
+/* RISE ABOVE: under the wordmark, at its bottom-right corner; the negative margin takes back the
+   letter-spacing after the last E, so the line ends exactly where the wordmark does */
+.hdr-sub{
+  align-self:flex-end;
+  margin:6px -.32em 0 0;
+  font-size:7.5px;letter-spacing:.32em;
+  transition:color .25s ease-out;
+}
+@media (hover:hover) and (pointer:fine){
+  .hdr-logo:hover .hdr-mark{transform:rotate(-8deg) scale(1.05);filter:drop-shadow(0 4px 6px rgb(2 0 110 / .3))}
+  .hdr-logo:hover .hdr-sub{color:var(--rust)}
+}
+.hdr-logo:active .hdr-mark{transform:scale(.94)}
+
+/* ---- links: on a frosted capsule; a paper pill follows the pointer from link to link,
+        and the current page carries a short rust bar ---- */
+.hdr-links{
+  position:relative;
+  padding:5px;
+  border-radius:999px;
+  background:rgb(236 227 209 / .55);
+  backdrop-filter:blur(12px) saturate(1.15);
+  -webkit-backdrop-filter:blur(12px) saturate(1.15);
+  box-shadow:
+    inset 0 0 0 1px rgb(67 40 42 / .1),
+    0 8px 22px -16px rgb(36 22 23 / .55);
+  pointer-events:auto; /* the gaps between links belong to the capsule, so the pill can glide over them */
+}
+/* over the page's own text, the capsule frosts a little deeper so the links stay clear */
+.hdr[data-state="shown"] .hdr-links{background:rgb(236 227 209 / .96)}
+.hdr-links ul{position:relative;z-index:1;display:flex;gap:2px;list-style:none}
+.hdr-pill{
+  position:absolute;
+  top:5px;bottom:5px;left:0;
+  width:var(--w, 0px);
+  border-radius:999px;
+  background:#F7F1E6;
+  box-shadow:0 1px 2px rgb(36 22 23 / .12), 0 6px 14px -8px rgb(36 22 23 / .35);
+  transform:translateX(var(--x, 0px));
+  opacity:0;
+  transition:opacity .18s ease-out;
+}
+.hdr-links[data-hover="on"] .hdr-pill{
+  opacity:1;
+  transition:
+    opacity .2s ease-out,
+    transform .38s var(--ease-ui),
+    width .38s var(--ease-ui);
+}
+.hdr-link{
+  position:relative;
+  display:block;
+  padding:10px 17px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:-.005em;
+  white-space:nowrap;
+  color:var(--ink); /* full ink: it sits over photographs at the top of the landing page */
+}
+.hdr-link::after{
+  content:"";
+  position:absolute;
+  left:50%;bottom:4px;
+  width:14px;height:2px;
+  margin-left:-7px;
+  border-radius:2px;
+  background:var(--rust);
+  transform:scaleX(0);
+  transition:transform .3s var(--ease-ui);
+}
+.hdr-link[aria-current="page"]::after{transform:none}
+.hdr-link:focus-visible{outline-offset:-2px}
+.hdr-link:active{transform:scale(.97)}
+
+/* ---- a link with pages under it (Our Work): a button that opens them as a small menu ---- */
+.hdr-link.is-current::after{transform:none}
+.hdr-drop-li{position:relative}
+.hdr-drop-btn{display:flex;align-items:center;gap:6px}
+.hdr-chev{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease-ui)}
+.hdr-drop-btn[aria-expanded="true"] .hdr-chev{transform:rotate(180deg)}
+.hdr-drop{
+  position:absolute;
+  top:calc(100% + 14px);left:50%;
+  width:264px;
+  margin-left:-132px;
+  padding:6px;
+  border-radius:20px;
+  background:#FFF4DA; /* the logo's cream */
+  box-shadow:0 0 0 1px rgb(2 0 110 / .1), 0 22px 44px -22px rgb(36 22 23 / .55);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-6px);
+  transform-origin:50% 0;
+  transition:opacity .15s ease-in, transform .15s ease-in, visibility 0s linear .15s;
+}
+.hdr-drop[data-open]{
+  opacity:1;visibility:visible;transform:none;
+  transition:opacity .22s var(--ease-ui), transform .32s var(--ease-ui), visibility 0s;
+}
+.hdr-drop ul{list-style:none;display:grid;gap:2px}
+.hdr-drop-link{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  color:var(--ink); /* the site's ink, as the header's links */
+  transition:background-color .2s ease-out;
+}
+.hdr-drop-mark{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:rgb(2 0 110 / .06);transition:background-color .2s ease-out}
+.hdr-drop-mark svg{width:17px;height:17px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.hdr-drop-text{display:flex;flex-direction:column;gap:3px;min-width:0}
+.hdr-drop-name{font-size:15px;font-weight:600;line-height:1.1}
+.hdr-drop-hint{font-size:10.5px;color:var(--rust)}
+.hdr-drop-link[aria-current="page"]{background:rgb(2 0 110 / .07)}
+.hdr-drop-all{margin-top:4px;padding-top:4px;border-top:1px solid rgb(2 0 110 / .1)}
+.hdr-drop-all .hdr-drop-link{justify-content:space-between}
+.hdr-drop-all .hdr-drop-name{font-weight:500;font-size:14px}
+.hdr-drop-go{width:14px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease-ui)}
+.hdr-drop-link:focus-visible{outline-offset:-2px}
+.hdr-drop-link:active{background:rgb(2 0 110 / .1)}
+/* the menu's items rise in one after the other as it opens */
+@keyframes hdr-drop-in{from{opacity:0;transform:translateY(10px)}}
+.hdr-drop[data-open] li{animation:hdr-drop-in .4s cubic-bezier(.2,.8,.2,1) both}
+.hdr-drop[data-open] li:nth-child(2){animation-delay:.04s}
+.hdr-drop[data-open] li:nth-child(3){animation-delay:.08s}
+.hdr-drop[data-open] li:nth-child(4){animation-delay:.12s}
+@media (hover:hover) and (pointer:fine){
+  .hdr-drop-link:hover{background:rgb(2 0 110 / .06)}
+  .hdr-drop-link:hover .hdr-drop-mark{background:rgb(2 0 110 / .1)}
+  .hdr-drop-link:hover .hdr-drop-mark svg{transform:translate(1px, -2px)}
+  .hdr-drop-link:hover .hdr-drop-go{transform:translateX(3px)}
+}
+
+/* ---- actions ---- */
+/* always the last column, also on the client pages where there are no links before it */
+.hdr-actions{grid-column:-2;justify-self:end;display:flex;align-items:center;gap:10px}
+
+.hdr-menu{
+  display:none;
+  width:44px;height:44px;
+  border-radius:50%;
+  place-items:center;
+  box-shadow:inset 0 0 0 1px rgb(67 40 42 / .28);
+  background:rgb(236 227 209 / .6);
+  transition:background-color .2s ease-out, transform .15s ease-out;
+}
+.hdr-menu svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round}
+.hdr-menu:hover{background:var(--paper)}
+.hdr-menu:active{transform:scale(.94)}
+
+/* ---- hidden: everything but the logo steps up and out ---- */
+.hdr-fade{
+  transition:
+    opacity .32s var(--ease-ui),
+    transform .4s var(--ease-ui),
+    visibility 0s linear 0s;
+}
+.hdr[data-state="hidden"] .hdr-fade{
+  opacity:0;
+  transform:translateY(-10px);
+  visibility:hidden; /* out of the Tab order while it is away */
+  transition:
+    opacity .18s ease-in,
+    transform .2s ease-in,
+    visibility 0s linear .2s;
+}
+
+/* ---- skip link: the first stop for the keyboard ---- */
+.skip-link{
+  position:absolute;
+  left:var(--gutter);top:10px;
+  z-index:2;
+  padding:12px 18px;
+  border-radius:999px;
+  background:var(--ink);
+  color:var(--paper);
+  font-size:13px;font-weight:600;
+  transform:translateY(-160%);
+}
+.skip-link:focus{transform:none}
+
+/* ---- small laptops: the links close up a little so they stay centred ---- */
+@media (max-width:1180px){
+  .hdr-in{gap:20px}
+  .hdr-link{padding-inline:12px}
+}
+/* ---- tablet and small laptops: no room for six links; the menu button opens them ---- */
+@media (max-width:1099px){
+  .hdr-in{grid-template-columns:1fr auto}
+  .hdr-links{display:none}
+  .hdr-menu{display:grid}
+}
+/* ---- phone: the logo and the menu; booking moves into the menu ---- */
+@media (max-width:639px){
+  .hdr-book{display:none}
+  .hdr-mark{width:30px;height:30px}
+  .hdr-title{font-size:18px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hdr{animation:none}
+  .hdr-logo::before,.hdr[data-state] .hdr-logo::before{transform:none}
+  .hdr-fade,.hdr[data-state="hidden"] .hdr-fade{transform:none}
+  .hdr-mark,.hdr-link::after{transition:none!important}
+  .hdr-drop,.hdr-drop[data-open],.hdr-chev,.hdr-drop-mark svg{transition:none}
+  .hdr-drop[data-open] li{animation:none}
+  .hdr-logo:hover .hdr-mark{transform:none}
+  /* the pill still marks the link pointed at, without sliding there */
+  .hdr-links[data-hover="on"] .hdr-pill{transition:opacity .2s ease-out}
+}

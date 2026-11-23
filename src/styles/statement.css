@@ -1,0 +1,88 @@
+/* =====================================================
+   2 · STATEMENT
+   ===================================================== */
+.statement{
+  position:relative;
+  min-height:var(--vh);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:80px 24px;
+  background:var(--paper);
+}
+.st-label{
+  color:var(--rust);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .7s ease, transform .9s var(--ease-out);
+}
+.in .st-label{opacity:1;transform:none}
+.st-text{
+  margin-top:30px;
+  font-size:clamp(40px, 7.2vw, 132px);
+  line-height:1.06;
+  letter-spacing:.005em;
+  --step:26ms;
+}
+.st-text .line{display:block;white-space:nowrap}
+.pl{
+  display:inline-block;
+  width:.86em;height:.86em;
+  border-radius:50%;
+  overflow:hidden;
+  vertical-align:-.1em;
+  margin:0 .2em;
+  transform:scale(0);
+  --d:calc(var(--i) * var(--step, 26ms));
+  background:var(--paper-2);
+  will-change:transform;
+}
+.pl img{width:100%;height:100%;object-fit:cover;transform:scale(1.5);will-change:transform}
+.in .pl{transform:scale(1);transition:transform .95s var(--ease-spring) var(--d)}
+.in .pl img{transform:scale(1);transition:transform 1.6s var(--ease-out) var(--d)}
+/* pointed at, a photo stretches sideways into a capsule; the line opens around it and still fits on its row */
+.pl{border-radius:999px}
+@media (hover:hover) and (pointer:fine){
+  .in .pl{transition:transform .95s var(--ease-spring) var(--d), width .6s var(--ease-ui)}
+  .in .pl:hover{width:1.45em}
+  .in .pl:hover img{transform:scale(1.06);transition:transform .9s var(--ease-ui)}
+}
+.emblem{
+  margin-top:46px;
+  width:66px;height:66px;
+  color:var(--rust);
+  opacity:0;
+  transform:rotate(-90deg) scale(.6);
+}
+.emblem svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.in .emblem{
+  opacity:1;transform:none;
+  transition:transform 1.3s var(--ease-rise) 1s, opacity .7s ease 1s;
+}
+
+/* the lit statement: the display face in sentence case; the moment's CSS (loaded with it) greys each
+   word at half ink until the scroll reaches it, and turns the <strong> words rust */
+.st-lit{width:min(980px, 100%);margin-top:44px}
+.statement .st-body{
+  margin:0 auto;
+  max-width:24em;
+  font-family:var(--display);
+  font-weight:500;
+  font-optical-sizing:none;
+  font-variation-settings:"opsz" 11;
+  font-size:clamp(24px, 2.75vw, 40px);
+  line-height:1.22;
+  letter-spacing:0;
+  text-wrap:balance;
+  color:var(--ink);
+}
+
+@media (max-width:760px){
+  .st-text{font-size:8.6vw;margin-top:22px}
+  .emblem{margin-top:34px;width:54px;height:54px}
+  .st-lit{margin-top:32px}
+  .statement .st-body{font-size:22px;line-height:1.28}
+}
+@media (prefers-reduced-motion:reduce){
+  .pl,.pl img,.emblem,.st-label{opacity:1;transform:none;transition:none!important}
+  .in .pl:hover img{transform:none}
+}

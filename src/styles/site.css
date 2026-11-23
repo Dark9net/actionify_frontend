@@ -1,0 +1,199 @@
+/* =====================================================
+   Shared by every page: the nav bar, buttons, links, section headings, reveals
+   ===================================================== */
+
+/* ---- buttons: one pill, three grounds ---- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  min-height:46px;
+  padding:0 24px;
+  border-radius:999px;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);font-weight:600;font-size:10.5px;
+  letter-spacing:.2em;text-transform:uppercase;line-height:1;
+  white-space:nowrap;
+  transition:background-color .25s ease, color .25s ease, box-shadow .25s ease, transform .2s var(--ease-out);
+}
+.btn:hover{background:#2f1c1d;transform:translateY(-1px)}
+.btn:active{transform:scale(.97)}
+.btn--ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.btn--ghost:hover{background:var(--ink);color:var(--paper)}
+.btn--paper{background:var(--paper);color:var(--ink)}
+.btn--paper:hover{background:#fbf5e8}
+.btn--paper:focus-visible{outline-color:var(--rust-light)}
+
+/* ---- "Book a photographer", wherever it appears: a pane of frosted glass, the same as the header's.
+   A pale tint over the page blurred behind it, a bright top edge and a soft drop.
+   Hover: a band of light sweeps across the pane, the rim brightens, the pane lifts 2px and its
+   shadow deepens, the arrow steps forward. Press: .97. `--dark` is the same pane for a dark ground. ---- */
+.glass-btn.glass-btn{ /* doubled: wins over each button's own ground, wherever its sheet loads */
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border:0;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .12) 55%, rgb(255 255 255 / .26)),
+    rgb(255 251 244 / .34);
+  -webkit-backdrop-filter:blur(16px) saturate(1.6) brightness(1.04);
+  backdrop-filter:blur(16px) saturate(1.6) brightness(1.04);
+  color:var(--ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .85),
+    inset 0 -1px 0 rgb(67 40 42 / .08),
+    inset 0 0 0 1px rgb(255 255 255 / .5),
+    0 1px 2px rgb(36 22 23 / .1),
+    0 12px 28px -14px rgb(36 22 23 / .45);
+  transition:
+    background .3s var(--ease-ui),
+    color .25s ease,
+    box-shadow .35s var(--ease-ui),
+    translate .3s var(--ease-ui),
+    scale .15s var(--ease-ui);
+}
+/* the band of light, parked off the left edge until hover */
+.glass-btn::after{
+  content:"";
+  position:absolute;inset:0;
+  z-index:-1;
+  border-radius:inherit;
+  background:linear-gradient(105deg, transparent 28%, rgb(255 255 255 / .8) 46%, rgb(255 255 255 / .2) 56%, transparent 70%);
+  transform:translateX(-110%);
+  pointer-events:none;
+}
+.glass-btn:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){
+  /* the lift and the press use `translate` and `scale`, so they never fight an entrance's `transform` */
+  .glass-btn.glass-btn:hover{
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / .72), rgb(255 255 255 / .22) 55%, rgb(255 255 255 / .36)),
+      rgb(255 251 244 / .46);
+    color:var(--ink);
+    translate:0 -2px;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / .95),
+      inset 0 -1px 0 rgb(67 40 42 / .08),
+      inset 0 0 0 1px rgb(255 255 255 / .75),
+      0 2px 4px rgb(36 22 23 / .1),
+      0 18px 34px -14px rgb(36 22 23 / .5);
+  }
+  .glass-btn:hover::after{transform:translateX(110%);transition:transform .85s var(--ease-ui)}
+}
+.glass-btn.glass-btn:active{scale:.97}
+/* the plain buttons' own hover and press moves step aside for the glass's */
+.btn.glass-btn:hover,.btn.glass-btn:active,.bk-cta.glass-btn:hover,.bk-cta.glass-btn:active,.sb-book.glass-btn:active{transform:none}
+
+/* on a dark ground (the menu's booking card): a smoky pane, the paper text on it */
+.glass-btn--dark.glass-btn--dark{
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .24), rgb(255 255 255 / .06) 55%, rgb(255 255 255 / .12)),
+    rgb(255 251 244 / .1);
+  color:var(--paper);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .38),
+    inset 0 0 0 1px rgb(255 255 255 / .24),
+    0 14px 30px -14px rgb(0 0 0 / .6);
+}
+.glass-btn--dark::after{background:linear-gradient(105deg, transparent 28%, rgb(255 255 255 / .38) 46%, rgb(255 255 255 / .08) 56%, transparent 70%)}
+.glass-btn--dark:focus-visible{outline-color:var(--rust-light)}
+@media (hover:hover) and (pointer:fine){
+  .glass-btn--dark.glass-btn--dark:hover{
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / .34), rgb(255 255 255 / .1) 55%, rgb(255 255 255 / .18)),
+      rgb(255 251 244 / .16);
+    color:var(--paper);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / .5),
+      inset 0 0 0 1px rgb(255 255 255 / .4),
+      0 18px 34px -14px rgb(0 0 0 / .7);
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .glass-btn.glass-btn:hover,.glass-btn.glass-btn:active{translate:none;scale:none}
+  .glass-btn::after{display:none}
+}
+
+.i-arrow{
+  width:14px;height:10px;flex:none;
+  stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .35s var(--ease-out), opacity .3s ease;
+}
+.btn:hover .i-arrow{transform:translateX(4px)}
+.i-cross{
+  width:12px;height:12px;flex:none;
+  stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;
+  transition:transform .35s var(--ease-out);
+}
+
+/* ---- text link: the underline draws in ---- */
+.tlink{
+  padding-bottom:2px;
+  background:
+    linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat,
+    linear-gradient(var(--tlink-rule, var(--ink-16)), var(--tlink-rule, var(--ink-16))) 0 100% / 100% 1px no-repeat;
+  transition:background-size .4s var(--ease-out);
+}
+.tlink:hover{background-size:100% 1px, 100% 1px}
+
+/* ---- section heading: rust label over a display title ---- */
+.sec-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
+  border-top:1px solid var(--ink-16);
+  padding-top:44px;
+}
+.sec-label{
+  color:var(--rust);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .7s ease, transform .9s var(--ease-out);
+}
+.in .sec-label{opacity:1;transform:none}
+.sec-title{
+  margin-top:22px;
+  font-size:clamp(34px, 4.25vw, 66px);
+  line-height:.98;
+  letter-spacing:.005em;
+  --step:30ms;
+}
+
+/* ---- reveals, played once when a section's .in arrives ---- */
+.rise{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .8s ease var(--wait, .5s), transform 1s var(--ease-out) var(--wait, .5s);
+}
+.in .rise{opacity:1;transform:none}
+/* a glass button that rises in keeps its own hover transitions as well */
+.glass-btn.glass-btn.rise{
+  transition:
+    opacity .8s ease var(--wait, .5s),
+    transform 1s var(--ease-out) var(--wait, .5s),
+    background .3s var(--ease-ui),
+    color .25s ease,
+    box-shadow .35s var(--ease-ui),
+    translate .3s var(--ease-ui),
+    scale .15s var(--ease-ui);
+}
+/* the keyboard never waits for an entrance: a focused control shows at once */
+.rise:focus-visible,.rise:focus-within{opacity:1;transform:none;transition:none}
+.wipe{
+  clip-path:inset(100% 0 0 0 round var(--wipe-r, 0px));
+  transition:clip-path 1.2s cubic-bezier(.7,0,.2,1) calc(.2s + var(--r, 0) * 110ms);
+}
+.in .wipe{clip-path:inset(0 round var(--wipe-r, 0px))}
+
+/* ---- a photograph in a frame: it eases closer under the pointer ---- */
+.shot{display:block;position:relative;overflow:hidden;background:var(--paper-2)}
+.shot img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .9s var(--ease-out);
+}
+a.shot:hover img,button.shot:hover img{transform:scale(1.03)}
+
+@media (max-width:760px){
+  .sec-head{padding-top:32px;flex-direction:column;align-items:flex-start;gap:24px}
+  .sec-title{font-size:10.4vw;margin-top:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  .sec-label,.rise,.wipe{opacity:1;transform:none;clip-path:none;transition:none!important}
+  .btn,.i-arrow,.shot img{transition:none}
+}

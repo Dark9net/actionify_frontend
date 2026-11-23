@@ -1,0 +1,1275 @@
+{
+ "start": "2026-11-22T02:33:25.651Z",
+ "round": 3,
+ "idle": 0,
+ "errors": 0,
+ "status": "open",
+ "history": [
+  {
+   "at": "2026-11-22T02:36:57.536Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 41,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-22T02:43:18.227Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 36,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-22T02:46:18.987Z",
+   "mode": "manual",
+   "status": "open",
+   "fails": 32,
+   "round": 3,
+   "reused": false,
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": null,
+  "url": "http://localhost:5199/our-work/films",
+  "root": null,
+  "kind": "service",
+  "category": "film, sound and series production",
+  "primary": "Talk to the studio",
+  "rounds": 3,
+  "start": "2026-11-22T02:33:25.651Z",
+  "by": "gate.mjs --start"
+ },
+ "manual": true,
+ "roundKey": "f48e8f0200845c83:da39a3ee",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "f48e8f0200845c83",
+ "page": "http://localhost:5199/our-work/films",
+ "found": {
+  "fails": [
+   {
+    "check": "nav",
+    "where": "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\"",
+    "msg": "\"RISE ABOVE^\" sits outside the nav bar div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade (464-976px)",
+    "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "nav"
+    ],
+    "wheres": [
+     "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\""
+    ]
+   },
+   {
+    "check": "nav",
+    "where": "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\"",
+    "msg": "\"Access your gallery\" sits outside the nav bar div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade (464-976px)",
+    "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "nav"
+    ],
+    "wheres": [
+     "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\""
+    ]
+   },
+   {
+    "check": "nav",
+    "where": "div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade",
+    "msg": "the nav bar spans 464-976px but the content spans 100-1340px, and its actions sit outside it",
+    "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "nav"
+    ],
+    "wheres": [
+     "div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade"
+    ]
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "main#main > section.pl-sec.pl-crafts \"What Films makes 07 CRAFTS 01 Commercial\"",
+    "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-craft.pl-glass:nth-of-type(1)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "scroll-reveal"
+    ],
+    "wheres": [
+     "main#main > section.pl-sec.pl-crafts \"What Films makes 07 CRAFTS 01 Commercial\""
+    ]
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "main#main > section.pl-sec.pl-plan \"Packages to sell first 01 Brand Film One\"",
+    "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-up:nth-of-type(1)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "scroll-reveal"
+    ],
+    "wheres": [
+     "main#main > section.pl-sec.pl-plan \"Packages to sell first 01 Brand Film One\""
+    ]
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "main#main > section.pl-others.in \"The other pillars PRODUCTION SOUND PILLA\"",
+    "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-up:nth-of-type(1)",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "scroll-reveal"
+    ],
+    "wheres": [
+     "main#main > section.pl-others.in \"The other pillars PRODUCTION SOUND PILLA\""
+    ]
+   },
+   {
+    "check": "scroll-reveal",
+    "where": "div#root > div.page.pl-page > footer.footer \"Rise above. Actionify is a creative tech\"",
+    "msg": "starts \"ft-in\" (1.2 s) the moment it is scrolled into view (an IntersectionObserver) on video.ft-video",
+    "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "scroll-reveal"
+    ],
+    "wheres": [
+     "div#root > div.page.pl-page > footer.footer \"Rise above. Actionify is a creative tech\""
+    ]
+   },
+   {
+    "check": "cta",
+    "where": "main#main > section.pl-others.in \"The other pillars\"",
+    "msg": "the last section before the footer ends with no button",
+    "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "cta"
+    ],
+    "wheres": [
+     "main#main > section.pl-others.in \"The other pillars\""
+    ]
+   },
+   {
+    "check": "copy-headings",
+    "where": "div.wrap > div.pl-stage.pl-stage--plan > div.pl-block > h2.pl-h2.display \"Packages to sell first\"",
+    "msg": "\"Packages to sell first\" names no product, part, place or section (2 headings like it; at most one brand line per page) (and 1 more like it: \"The other pillars\")",
+    "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headings"
+    ],
+    "wheres": [
+     "div.wrap > div.pl-stage.pl-stage--plan > div.pl-block > h2.pl-h2.display \"Packages to sell first\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "div.pl-lock > span.pl-type > span.pl-sub > span.pl-sub-t \"PRODUCTION\"",
+    "msg": "body text over a effect reads at 4.2:1 at its worst tenth (needs 4.5:1)",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "div.pl-lock > span.pl-type > span.pl-sub > span.pl-sub-t \"PRODUCTION\""
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#main > section.pl-sec.pl-plan / main#main > section.pl-others.in",
+    "msg": "139px between these sections, +248% against the median 40px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "main#main > section.pl-sec.pl-plan / main#main > section.pl-others.in"
+    ]
+   },
+   {
+    "check": "effect-kind",
+    "where": "(the page)",
+    "msg": "a service page (--type) moves with the scroll: scroll libraries or timelines (animation-timeline:scroll, animation-timeline:view, view-timeline): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+    "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "effect-kind"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "moment-none",
+    "where": "(the page)",
+    "msg": "a service page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+    "fix": "deal one (moments.mjs pick --page service --photo) and mount it in its own section",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "moment-none"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "div#root > div.page.pl-page > footer.footer \"Rise above.Actionify is a creative techn\"",
+    "msg": "the section is 672px tall (0.7 screens), 228px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "div#root > div.page.pl-page > footer.footer \"Rise above.Actionify is a creative techn\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "main#main > section.pl-hero \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+    "msg": "the section starts at 72px, 72px below the screen grid (0 x 900px): sections start on whole screens (SR-2)",
+    "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "main#main > section.pl-hero \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+     "main#main > section.pl-sec.pl-crafts \"What Films makes07 crafts01Commercials02\"",
+     "main#main > section.pl-sec.pl-plan \"Packages to sell first01Brand FilmOne 60\""
+    ]
+   },
+   {
+    "check": "section-air",
+    "where": "main#main > section.pl-sec.pl-crafts / main#main > section.pl-sec.pl-plan",
+    "msg": "32px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)",
+    "fix": "keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-air"
+    ],
+    "wheres": [
+     "main#main > section.pl-sec.pl-crafts / main#main > section.pl-sec.pl-plan"
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "main#main > section.pl-others.in \"The other pillarsProductionSound pillarP\"",
+    "msg": "the screen at scroll 3372px (the top of section 5) shows 156px of section 4 beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section"
+    ],
+    "wheres": [
+     "main#main > section.pl-others.in \"The other pillarsProductionSound pillarP\"",
+     "main#main > section.pl-sec.pl-crafts \"What Films makes07 crafts01Commercials02\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "div#root > header.hdr \"Skip to contentRise Above^ HomeServicesO\"",
+    "msg": "the nav's first box starts at 24px and its last ends at 1340px, not on its .wrap at 100-1340px (SR-6)",
+    "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "div#root > header.hdr \"Skip to contentRise Above^ HomeServicesO\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "div#root \"Skip to contentRise Above^ HomeServicesO\"",
+    "msg": "a <div> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+    "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "div#root \"Skip to contentRise Above^ HomeServicesO\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "main#main > section.pl-hero > div.wrap \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+    "msg": "the hero's .wrap holds 1 children, 0 of them .hero-text: one .hero-text and at most one strip (and 3 more like it: \"Rise above.Actionify is \", div#root > div.page.pl-page > footer.footer > div.ft-stage, div#root > div.page.pl-page > footer.footer > p.ft-wordmark) (SR-6)",
+    "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "main#main > section.pl-hero > div.wrap \"Pillar 01 / 03Films^Media pillarFilmsCom\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "div#root > div.page.pl-page > footer.footer > div.ft-stage",
+    "msg": "a box runs 0-1440px, outside the container lines of section 5 at 100-1340px: full width is for background layers and grounds only (SR-6)",
+    "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "div#root > div.page.pl-page > footer.footer > div.ft-stage"
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "div#root > header.hdr > a.skip-link \"Skip to content\"",
+    "msg": "a box runs 24-154px, outside the container lines of the nav at 100-1340px: full width is for background layers and grounds only (and 2 more like it: \"Skip to content\", \"Rise Above^\") (SR-6)",
+    "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "div#root > header.hdr > a.skip-link \"Skip to content\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section.pl-hero > div.wrap > div.pl-stage.pl-stage--hero > p.pl-chip.pl-glass \"Pillar 01 / 03\"",
+    "msg": "1 text block starts on a left line at x 1168, 1068px from the container's left: text starts on the container's left, or on one split line (x 627, 732, 837) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section.pl-hero > div.wrap > div.pl-stage.pl-stage--hero > p.pl-chip.pl-glass \"Pillar 01 / 03\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "div.wrap > div.pl-stage.pl-stage--crafts > ol.pl-craft-list > li.pl-craft.pl-glass:nth-of-type(1) \"01Commercials\"",
+    "msg": "2 text blocks start on a left line at x 177, 77px from the container's left: text starts on the container's left, or on one split line (x 627, 732, 837) (also \"04Documentaries\") (and 5 more like it: \"Rise above.\", \"Films^Media pillarFilmsC\", x 149) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "div.wrap > div.pl-stage.pl-stage--crafts > ol.pl-craft-list > li.pl-craft.pl-glass:nth-of-type(1) \"01Commercials\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "div.pl-stage.pl-stage--plan > div.pl-block > div.pl-plan-row > ul.pl-packs.pl-packs--4 \"01Brand FilmOne 60 to 120 second hero fi\"",
+    "msg": "a row of 2 items: its first item starts at 149px, the container's left line at 100px; its last item ends at 901px, the container's right line at 1340px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "div.pl-stage.pl-stage--plan > div.pl-block > div.pl-plan-row > ul.pl-packs.pl-packs--4 \"01Brand FilmOne 60 to 120 second hero fi\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "div#root > div.page.pl-page > footer.footer > div.ft-content \"Rise above.Actionify is a creative techn\"",
+    "msg": "a row of 4 items: its first item starts at 160px, the container's left line at 100px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "div#root > div.page.pl-page > footer.footer > div.ft-content \"Rise above.Actionify is a creative techn\""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "section.pl-sec.pl-plan > div.wrap > div.pl-stage.pl-stage--plan > img.pl-photo \"img: photo-1574717024653-61fd2cf4d44d?au\"",
+    "msg": "photo-1574717024653-61fd2cf4d44d: 1800x1200 shown at 350x1673, blown up 1.39x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "section.pl-sec.pl-plan > div.wrap > div.pl-stage.pl-stage--plan > img.pl-photo \"img: photo-1574717024653-61fd2cf4d44d?au\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\"",
+    "msg": "828px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short"
+    ],
+    "wheres": [
+     "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\""
+    ]
+   },
+   {
+    "check": "sparse",
+    "where": "section.pl-others section.pl-others \"The other pillarsProductionSound\"",
+    "msg": "its content fills 7% of its screen; merge it or give it its visual (0.55 is the aim)",
+    "fix": "fill the section or make it a screen shorter",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "sparse"
+    ],
+    "wheres": [
+     "section.pl-others section.pl-others \"The other pillarsProductionSound\""
+    ]
+   },
+   {
+    "check": "hero-fold",
+    "where": "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\"",
+    "msg": "starts at y 72, not under the nav",
+    "fix": "the hero fills the first screen alone, its button inside it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "hero-fold"
+    ],
+    "wheres": [
+     "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.pl-sec.pl-plan section.pl-sec.pl-plan \"Packages to sell first01Brand Fi\"",
+    "msg": "1693px, 2.01 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.pl-sec.pl-plan section.pl-sec.pl-plan \"Packages to sell first01Brand Fi\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.pl-others section.pl-others \"The other pillarsProductionSound\"",
+    "msg": "1220px, 1.45 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.pl-others section.pl-others \"The other pillarsProductionSound\""
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "nav",
+    "where": "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\"",
+    "msg": "the nav is lopsided: its first item starts 6px outside the content's edge (100px), while its last ends on the other edge",
+    "fix": "start the nav's first item and end its last on the content's two edges",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-picture",
+    "where": "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\"",
+    "msg": "a picture sits inside the button \"Access your gallery\"",
+    "fix": "take the picture out of the button: a label, at most an icon",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-headline",
+    "where": "h1#pl-title \"Films\"",
+    "msg": "the h1 has 1 word (2 to 8 read at a glance)",
+    "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-buttons",
+    "where": "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\"",
+    "msg": "\"Access your gallery\" does not start with a verb (book, buy, try, start, get, see...)",
+    "fix": "label buttons with a verb and what the visitor gets (\"Book a room\", \"Start free trial\")",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-actions",
+    "where": "(the page)",
+    "msg": "the main action \"Talk to the studio\" does not read word for word the same in the closing section",
+    "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tilt",
+    "where": "div#root > button.to-top > svg.to-top-ring",
+    "msg": "rotated -90.0°",
+    "fix": "set it straight",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-credit",
+    "where": "section.pl-hero > div.wrap > div.pl-stage.pl-stage--hero > img.pl-photo",
+    "msg": "5 library sources (unsplash): photo-1601506521937-0121a7fc2a6b, photo-1626379953822-baec19c3accd, photo-1574717024653-61fd2cf4d44d, photo-1598488035139-bdbb2231ce04, photo-1492691527719-9d1e07e534b4; confirm each shows the client's own product, place or people",
+    "fix": "confirm the library photograph shows the client's own product, place or people; otherwise replace it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\"",
+    "msg": "the button \"Access your gallery\" (#fffbf4) stands only 1.14:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "flush",
+    "where": "section.pl-sec.pl-crafts > div.wrap > div.pl-stage.pl-stage--crafts > img.pl-photo \"img: photo-1626379953822-baec19c3accd?au\"",
+    "msg": "section.pl-sec.pl-crafts and section.pl-sec.pl-plan run together: 20px between their content, on one ground",
+    "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\"",
+    "msg": "a 158x42px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "footer.footer > div.ft-content > div.ft-brand > a.ft-logo",
+    "msg": "a 158x30px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "nav.ft-col.ft-col--menu > ul.ft-list > li:nth-of-type(1) > a \"Home\"",
+    "msg": "a 36x16px tap target (and 3 more like it on this screen): under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "div.ft-col > ul.ft-list > li.ft-social > a.ft-soc:nth-of-type(1)",
+    "msg": "a 42x42px tap target (and 1 more like it on this screen): under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#main > section.pl-sec.pl-crafts / main#main > section.pl-sec.pl-plan",
+    "msg": "20px between these sections, -41% against the median 34px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-numbered",
+    "msg": "16 step numbers",
+    "fix": "number only steps that happen in order (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "(the copy)",
+    "exact": false
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 146,
+   "layout": 20
+  }
+ },
+ "open": [
+  {
+   "check": "nav",
+   "where": "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\"",
+   "msg": "\"RISE ABOVE^\" sits outside the nav bar div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade (464-976px)",
+   "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "nav"
+   ],
+   "wheres": [
+    "div#root > header.hdr > div.wrap.hdr-in > a.hdr-logo \"RISE ABOVE^\""
+   ]
+  },
+  {
+   "check": "nav",
+   "where": "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\"",
+   "msg": "\"Access your gallery\" sits outside the nav bar div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade (464-976px)",
+   "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "nav"
+   ],
+   "wheres": [
+    "header.hdr > div.wrap.hdr-in > div.hdr-actions.hdr-fade > a.book-btn.hdr-book \"Access your gallery\""
+   ]
+  },
+  {
+   "check": "nav",
+   "where": "div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade",
+   "msg": "the nav bar spans 464-976px but the content spans 100-1340px, and its actions sit outside it",
+   "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "nav"
+   ],
+   "wheres": [
+    "div#root > header.hdr > div.wrap.hdr-in > nav.hdr-links.hdr-fade"
+   ]
+  },
+  {
+   "check": "scroll-reveal",
+   "where": "main#main > section.pl-sec.pl-crafts \"What Films makes 07 CRAFTS 01 Commercial\"",
+   "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-craft.pl-glass:nth-of-type(1)",
+   "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "scroll-reveal"
+   ],
+   "wheres": [
+    "main#main > section.pl-sec.pl-crafts \"What Films makes 07 CRAFTS 01 Commercial\""
+   ]
+  },
+  {
+   "check": "scroll-reveal",
+   "where": "main#main > section.pl-sec.pl-plan \"Packages to sell first 01 Brand Film One\"",
+   "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-up:nth-of-type(1)",
+   "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "scroll-reveal"
+   ],
+   "wheres": [
+    "main#main > section.pl-sec.pl-plan \"Packages to sell first 01 Brand Film One\""
+   ]
+  },
+  {
+   "check": "scroll-reveal",
+   "where": "main#main > section.pl-others.in \"The other pillars PRODUCTION SOUND PILLA\"",
+   "msg": "starts \"opacity\" (0.6 s) the moment it is scrolled into view (an IntersectionObserver) on li.pl-up:nth-of-type(1)",
+   "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "scroll-reveal"
+   ],
+   "wheres": [
+    "main#main > section.pl-others.in \"The other pillars PRODUCTION SOUND PILLA\""
+   ]
+  },
+  {
+   "check": "scroll-reveal",
+   "where": "div#root > div.page.pl-page > footer.footer \"Rise above. Actionify is a creative tech\"",
+   "msg": "starts \"ft-in\" (1.2 s) the moment it is scrolled into view (an IntersectionObserver) on video.ft-video",
+   "fix": "show it at rest: no fade, rise or unmask when it is scrolled into view",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "scroll-reveal"
+   ],
+   "wheres": [
+    "div#root > div.page.pl-page > footer.footer \"Rise above. Actionify is a creative tech\""
+   ]
+  },
+  {
+   "check": "cta",
+   "where": "main#main > section.pl-others.in \"The other pillars\"",
+   "msg": "the last section before the footer ends with no button",
+   "fix": "add the action: a button in the hero, one on every priced item, one in the closing section",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "cta"
+   ],
+   "wheres": [
+    "main#main > section.pl-others.in \"The other pillars\""
+   ]
+  },
+  {
+   "check": "copy-headings",
+   "where": "div.wrap > div.pl-stage.pl-stage--plan > div.pl-block > h2.pl-h2.display \"Packages to sell first\"",
+   "msg": "\"Packages to sell first\" names no product, part, place or section (2 headings like it; at most one brand line per page) (and 1 more like it: \"The other pillars\")",
+   "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headings"
+   ],
+   "wheres": [
+    "div.wrap > div.pl-stage.pl-stage--plan > div.pl-block > h2.pl-h2.display \"Packages to sell first\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "div.pl-lock > span.pl-type > span.pl-sub > span.pl-sub-t \"PRODUCTION\"",
+   "msg": "body text over a effect reads at 4.2:1 at its worst tenth (needs 4.5:1)",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "div.pl-lock > span.pl-type > span.pl-sub > span.pl-sub-t \"PRODUCTION\""
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "main#main > section.pl-sec.pl-plan / main#main > section.pl-others.in",
+   "msg": "139px between these sections, +248% against the median 40px",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "main#main > section.pl-sec.pl-plan / main#main > section.pl-others.in"
+   ]
+  },
+  {
+   "check": "effect-kind",
+   "where": "(the page)",
+   "msg": "a service page (--type) moves with the scroll: scroll libraries or timelines (animation-timeline:scroll, animation-timeline:view, view-timeline): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+   "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "effect-kind"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "moment-none",
+   "where": "(the page)",
+   "msg": "a service page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+   "fix": "deal one (moments.mjs pick --page service --photo) and mount it in its own section",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "moment-none"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "div#root > div.page.pl-page > footer.footer \"Rise above.Actionify is a creative techn\"",
+   "msg": "the section is 672px tall (0.7 screens), 228px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "div#root > div.page.pl-page > footer.footer \"Rise above.Actionify is a creative techn\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "main#main > section.pl-hero \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+   "msg": "the section starts at 72px, 72px below the screen grid (0 x 900px): sections start on whole screens (SR-2)",
+   "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "main#main > section.pl-hero \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+    "main#main > section.pl-sec.pl-crafts \"What Films makes07 crafts01Commercials02\"",
+    "main#main > section.pl-sec.pl-plan \"Packages to sell first01Brand FilmOne 60\""
+   ]
+  },
+  {
+   "check": "section-air",
+   "where": "main#main > section.pl-sec.pl-crafts / main#main > section.pl-sec.pl-plan",
+   "msg": "32px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)",
+   "fix": "keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-air"
+   ],
+   "wheres": [
+    "main#main > section.pl-sec.pl-crafts / main#main > section.pl-sec.pl-plan"
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "main#main > section.pl-others.in \"The other pillarsProductionSound pillarP\"",
+   "msg": "the screen at scroll 3372px (the top of section 5) shows 156px of section 4 beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section"
+   ],
+   "wheres": [
+    "main#main > section.pl-others.in \"The other pillarsProductionSound pillarP\"",
+    "main#main > section.pl-sec.pl-crafts \"What Films makes07 crafts01Commercials02\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "div#root > header.hdr \"Skip to contentRise Above^ HomeServicesO\"",
+   "msg": "the nav's first box starts at 24px and its last ends at 1340px, not on its .wrap at 100-1340px (SR-6)",
+   "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "div#root > header.hdr \"Skip to contentRise Above^ HomeServicesO\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "div#root \"Skip to contentRise Above^ HomeServicesO\"",
+   "msg": "a <div> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+   "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "div#root \"Skip to contentRise Above^ HomeServicesO\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "main#main > section.pl-hero > div.wrap \"Pillar 01 / 03Films^Media pillarFilmsCom\"",
+   "msg": "the hero's .wrap holds 1 children, 0 of them .hero-text: one .hero-text and at most one strip (and 3 more like it: \"Rise above.Actionify is \", div#root > div.page.pl-page > footer.footer > div.ft-stage, div#root > div.page.pl-page > footer.footer > p.ft-wordmark) (SR-6)",
+   "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "main#main > section.pl-hero > div.wrap \"Pillar 01 / 03Films^Media pillarFilmsCom\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "div#root > div.page.pl-page > footer.footer > div.ft-stage",
+   "msg": "a box runs 0-1440px, outside the container lines of section 5 at 100-1340px: full width is for background layers and grounds only (SR-6)",
+   "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "div#root > div.page.pl-page > footer.footer > div.ft-stage"
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "div#root > header.hdr > a.skip-link \"Skip to content\"",
+   "msg": "a box runs 24-154px, outside the container lines of the nav at 100-1340px: full width is for background layers and grounds only (and 2 more like it: \"Skip to content\", \"Rise Above^\") (SR-6)",
+   "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "div#root > header.hdr > a.skip-link \"Skip to content\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section.pl-hero > div.wrap > div.pl-stage.pl-stage--hero > p.pl-chip.pl-glass \"Pillar 01 / 03\"",
+   "msg": "1 text block starts on a left line at x 1168, 1068px from the container's left: text starts on the container's left, or on one split line (x 627, 732, 837) (SR-6)",
+   "fix": "start the text on the container's left, or on the one split line every split shares",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section.pl-hero > div.wrap > div.pl-stage.pl-stage--hero > p.pl-chip.pl-glass \"Pillar 01 / 03\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "div.wrap > div.pl-stage.pl-stage--crafts > ol.pl-craft-list > li.pl-craft.pl-glass:nth-of-type(1) \"01Commercials\"",
+   "msg": "2 text blocks start on a left line at x 177, 77px from the container's left: text starts on the container's left, or on one split line (x 627, 732, 837) (also \"04Documentaries\") (and 5 more like it: \"Rise above.\", \"Films^Media pillarFilmsC\", x 149) (SR-6)",
+   "fix": "start the text on the container's left, or on the one split line every split shares",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "div.wrap > div.pl-stage.pl-stage--crafts > ol.pl-craft-list > li.pl-craft.pl-glass:nth-of-type(1) \"01Commercials\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "div.pl-stage.pl-stage--plan > div.pl-block > div.pl-plan-row > ul.pl-packs.pl-packs--4 \"01Brand FilmOne 60 to 120 second hero fi\"",
+   "msg": "a row of 2 items: its first item starts at 149px, the container's left line at 100px; its last item ends at 901px, the container's right line at 1340px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "div.pl-stage.pl-stage--plan > div.pl-block > div.pl-plan-row > ul.pl-packs.pl-packs--4 \"01Brand FilmOne 60 to 120 second hero fi\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "div#root > div.page.pl-page > footer.footer > div.ft-content \"Rise above.Actionify is a creative techn\"",
+   "msg": "a row of 4 items: its first item starts at 160px, the container's left line at 100px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "div#root > div.page.pl-page > footer.footer > div.ft-content \"Rise above.Actionify is a creative techn\""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "section.pl-sec.pl-plan > div.wrap > div.pl-stage.pl-stage--plan > img.pl-photo \"img: photo-1574717024653-61fd2cf4d44d?au\"",
+   "msg": "photo-1574717024653-61fd2cf4d44d: 1800x1200 shown at 350x1673, blown up 1.39x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "section.pl-sec.pl-plan > div.wrap > div.pl-stage.pl-stage--plan > img.pl-photo \"img: photo-1574717024653-61fd2cf4d44d?au\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\"",
+   "msg": "828px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short"
+   ],
+   "wheres": [
+    "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\""
+   ]
+  },
+  {
+   "check": "sparse",
+   "where": "section.pl-others section.pl-others \"The other pillarsProductionSound\"",
+   "msg": "its content fills 7% of its screen; merge it or give it its visual (0.55 is the aim)",
+   "fix": "fill the section or make it a screen shorter",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "sparse"
+   ],
+   "wheres": [
+    "section.pl-others section.pl-others \"The other pillarsProductionSound\""
+   ]
+  },
+  {
+   "check": "hero-fold",
+   "where": "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\"",
+   "msg": "starts at y 72, not under the nav",
+   "fix": "the hero fills the first screen alone, its button inside it",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "hero-fold"
+   ],
+   "wheres": [
+    "section.pl-hero section.pl-hero \"Pillar 01 / 03Films^Media pillar\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.pl-sec.pl-plan section.pl-sec.pl-plan \"Packages to sell first01Brand Fi\"",
+   "msg": "1693px, 2.01 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.pl-sec.pl-plan section.pl-sec.pl-plan \"Packages to sell first01Brand Fi\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.pl-others section.pl-others \"The other pillarsProductionSound\"",
+   "msg": "1220px, 1.45 screens; a section is exactly one or two (--h), or on a phone at least one that its content fills",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.pl-others section.pl-others \"The other pillarsProductionSound\""
+   ]
+  }
+ ],
+ "waived": [],
+ "warnCount": 15,
+ "at": "2026-11-22T02:46:18.989Z",
+ "openTold": true
+}
